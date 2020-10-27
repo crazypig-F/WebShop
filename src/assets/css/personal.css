@@ -1,0 +1,128 @@
+.s_content{
+	width: 100%;
+	background: #F2F2F2;
+	padding-bottom: 60px;
+}
+
+.s_content .s_content_c{
+    padding-top: 69px;
+    background:#f0f3ef;
+    display: flex;
+    justify-content: center;
+}
+
+.s_content .s_content_c .left{
+    width: 200px;
+    background-color: #fff;
+}
+.s_content .s_content_c .left .list-item{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.s_content .s_content_c .left .list-item .list-title{
+    padding-left: 30px;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(14, 13, 13);
+    margin: 5px;
+}
+.s_content .s_content_c .left .list-item .list-content{
+    padding-left: 38px;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(46, 44, 44);
+    margin: 5px;
+}
+.s_content .s_content_c .left .list-item .list-content:hover{
+    color: rgb(245, 18, 18);
+}
+.s_content .s_content_c .right{
+    width: 900px;
+    /* background-color: #fff; */
+    margin-left: 60px;
+    margin-top: 20px;
+}
+
+.s_content .s_content_c .right .right-title{
+    padding-left: 38px;
+    font-size: 25px;
+    font-weight: 600;
+    color: rgb(14, 13, 13);
+    margin: 5px;
+}
+
+.s_content .s_content_c .right .line1{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.s_content .s_content_c .right .box1{
+    width: 400px;
+    background-color: #fff;
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-around;
+}
+.s_content .s_content_c .right .box1 .head-img{
+    width: 100px;
+    margin: 10px;
+    border-radius: 100%;
+}
+.s_content .s_content_c .right .box1 .content .name{
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(221, 25, 247);
+    margin: 5px;
+    text-align: center;
+}
+.s_content .s_content_c .right .box1 .content{
+    width: 50%;
+    border-left: 2px solid rgba(180, 173, 173, 0.781);
+}
+.s_content .s_content_c .right .box1 .content .text{
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(95, 86, 86);
+    margin: 5px;
+    text-align: center;
+}
+.s_content .s_content_c .right .box1 .content .number{
+    text-align: center;
+    font-size: 35px;
+    font-weight: 700;
+    color: rgb(14, 196, 105);
+    margin: 5px;
+}
+.s_content .s_content_c .right .box2{
+    background-color: #fff;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+}
+.s_content .s_content_c .right .box2 .pay{
+    border-right: 1px solid rgb(122, 113, 113);
+    width: 220px;
+}
+.s_content .s_content_c .right .box2 .get{
+    width: 220px;
+    border-right: 1px solid rgb(122, 113, 113);
+}
+.s_content .s_content_c .right .box2 .comment{
+    width: 220px;
+}
+.box2-img{
+    width: 50px;
+    margin-top: 20px;
+    margin-left: 84px;
+}
+.box2-a:hover{
+    color: red;
+}
+.box2-text{
+    text-align: center;
+    margin-top: 5px;
+}
+.line2-img{
+    margin-top: 40px;
+}

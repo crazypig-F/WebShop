@@ -1,0 +1,59 @@
+.s_content{
+	width: 100%;
+	background: #F2F2F2;
+	padding-bottom: 60px;
+}
+
+.s_content .s_content_c{
+    padding-top: 69px;
+    background:#f0f3ef;
+    padding-bottom: 15px;
+    border-bottom: 1px rgb(97, 94, 94) dashed;
+}
+
+.content-title{
+    padding-top: 20px;
+    margin-left: 120px;
+    font-size: 20px;
+}
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+.good-img{
+    margin-top: 40px;
+    width: 200px;
+    height: 200px;
+}
+
+.pay-context{
+    margin-left: 80px;
+    margin-top: 40px;
+}
+.text{
+    font-size: 22px;
+    font-weight: 500;
+    margin: 15px 0;
+    color: #ce810e;
+}
+
+.pay-text{
+    padding-left: 100px;
+    margin-top: 20px;
+    font-size: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px rgb(97, 94, 94) dashed;
+}
+
+.pay-way{
+    margin-left: 200px;
+    margin-right: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.pay-img{
+    margin: 30px 50px;
+}
