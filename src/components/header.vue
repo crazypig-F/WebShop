@@ -61,12 +61,12 @@
         </dd>
       </dl>
       <ul class="nav">
-        <li><a href="index.html">首页</a></li>
-        <li><a href="allproducts.html">所有产品</a></li>
+        <li><router-link to='/index' tag="a">首页</router-link></li>
+        <li><router-link to='/all' tag="a">所有产品</router-link></li>
         <li><a href="blog.html">博客</a></li>
-        <li><a href="article.html">文章列表</a></li>
+        <li><router-link to='/personal' tag="a">个人中心</router-link></li>
       </ul>
-      <a href="#" class="search"></a>
+      <!-- <a href="#" class="search"></a> -->
       <div class="reg">
         <div class="ico">
           <span class="ico_c"></span>
