@@ -63,24 +63,25 @@
       <ul class="nav">
         <li><router-link to='/index' tag="a">首页</router-link></li>
         <li><router-link to='/all' tag="a">所有产品</router-link></li>
-        <li><a href="blog.html">博客</a></li>
         <li><router-link to='/personal' tag="a">个人中心</router-link></li>
       </ul>
       <!-- <a href="#" class="search"></a> -->
       <div class="reg">
-        <div class="ico">
-          <span class="ico_c"></span>
-          <div class="settle">
-            <p class="con">0件商品 共计：<span>￥0</span></p>
-            <a href="#" class="btn">结算</a>
+        <router-link to='/cart' tag="a">
+          <div class="ico">
+            <span class="ico_c"></span>
+            <div class="settle">
+              <p class="con">0件商品 共计：<span>￥0</span></p>
+              <a href="#" class="btn">结算</a>
+            </div>
+            <span class="con"> 0 </span>
           </div>
-          <span class="con"> 0 </span>
-        </div>
-        <div class="reg_c">
-          <a href="land.html" id="">登陆</a>
-          <span>&nbsp;|&nbsp;</span>
-          <a href="registe.html">注册</a>
-        </div>
+          <div class="reg_c">
+            <a href="land.html" id="">登录</a>
+            <span>&nbsp;|&nbsp;</span>
+            <a href="registe.html">注册</a>
+          </div>
+        </router-link>
       </div>
     </div>
   </div>
