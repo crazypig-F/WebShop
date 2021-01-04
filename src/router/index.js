@@ -3,6 +3,9 @@ import Index from '../components/index'
 import AllProduct from '../components/allproducts'
 import Personal from '../components/personal'
 import Cart from '../components/cart'
+import Login from '../components/login'
+import Register from '../components/register'
+import Detail from '../components/detail'
 
 const routes = [
   {
@@ -24,6 +27,18 @@ const routes = [
   {
     path: '/cart',
     component: Cart
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/register',
+    component: Register
+  },
+  {
+    path: '/detail',
+    component: Detail
   }
 ]
 

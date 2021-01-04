@@ -77,9 +77,9 @@
             <span class="con"> 0 </span>
           </div>
           <div class="reg_c">
-            <a href="land.html" id="">登录</a>
+            <router-link to='/login' tag="a">登录</router-link>
             <span>&nbsp;|&nbsp;</span>
-            <a href="registe.html">注册</a>
+            <router-link to='/register' tag="a">注册</router-link>
           </div>
         </router-link>
       </div>
