@@ -21,10 +21,12 @@
             <tr class="t2">
               <th>类别</th>
               <td>
-                <a href="#">不锈钢</a>
-                <a href="#">原料水泥</a>
-                <a href="#">塑料</a>
-                <a href="#">木质</a>
+                <a
+                  v-for="item in category"
+                  :key="item.id"
+                  @click="get_good_with_category(item)"
+                  >{{ item }}</a
+                >
               </td>
             </tr>
           </table>
@@ -47,10 +49,10 @@
         <div class="s_prod">
           <ul class="pub_pro">
             <li v-for="item in goods" :key="item.id">
-              <img :src=item.bookPoster alt="" />
+              <img :src="item.bookPoster" alt="" />
               <div class="cont">
-                <h3>{{item.bookName}}</h3>
-                <span>￥{{item.bookPrice}}</span>
+                <h3>{{ item.bookName }}</h3>
+                <span>￥{{ item.bookPrice }}</span>
               </div>
               <div class="mask">
                 <a href="#" class="btn">查看详情</a>
@@ -73,153 +75,27 @@
 <script>
 import Header from "./header";
 import Footer from "./footer";
+import axios from "axios";
 export default {
   data() {
     return {
-      goods: [
-        {
-          bookId: 15,
-          bookName: "不锈钢时尚咖啡水壶",
-          categoryId: 0,
-          bookCategory: {
-            categoryId: 0,
-            categoryName: "不锈钢",
-            parentId: 0,
-          },
-          bookStandard: null,
-          bookAuthor: null,
-          bookSupplierId: 1,
-          supplier: {
-            supplierId: 1,
-            supplierName: "阿里巴巴",
-            supplierPrivy: "马云",
-            supplierAddress: "杭州",
-            supplirePhone: "123456",
-          },
-          bookPrice: 300.0,
-          bookDiscount: 1.0,
-          bookPoster:
-            "http://asset.ibanquan.com/image/5880851f3f8f90098800003d/s_w330h330.png?v=1484817695",
-        },
-        {
-          bookId: 16,
-          bookName: "经典系列红色时钟",
-          categoryId: 2,
-          bookCategory: {
-            categoryId: 2,
-            categoryName: "塑料",
-            parentId: 0,
-          },
-          bookStandard: null,
-          bookAuthor: null,
-          bookSupplierId: 2,
-          supplier: {
-            supplierId: 2,
-            supplierName: "当当",
-            supplierPrivy: "李国庆",
-            supplierAddress: "北京",
-            supplirePhone: "542225",
-          },
-          bookPrice: 580.0,
-          bookDiscount: 1.0,
-          bookPoster:
-            "http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_w330h330.png?v=1484817638",
-        },
-        {
-          bookId: 17,
-          bookName: "简约原木餐盘",
-          categoryId: 3,
-          bookCategory: {
-            categoryId: 3,
-            categoryName: "木制",
-            parentId: 0,
-          },
-          bookStandard: "",
-          bookAuthor: "",
-          bookSupplierId: 1,
-          supplier: {
-            supplierId: 1,
-            supplierName: "阿里巴巴",
-            supplierPrivy: "马云",
-            supplierAddress: "杭州",
-            supplirePhone: "123456",
-          },
-          bookPrice: 100.0,
-          bookDiscount: 1.0,
-          bookPoster: "http://bookpicture.molycao.cn/1609761036572.png",
-        },
-        {
-          bookId: 17,
-          bookName: "简约原木餐盘",
-          categoryId: 3,
-          bookCategory: {
-            categoryId: 3,
-            categoryName: "木制",
-            parentId: 0,
-          },
-          bookStandard: "",
-          bookAuthor: "",
-          bookSupplierId: 1,
-          supplier: {
-            supplierId: 1,
-            supplierName: "阿里巴巴",
-            supplierPrivy: "马云",
-            supplierAddress: "杭州",
-            supplirePhone: "123456",
-          },
-          bookPrice: 100.0,
-          bookDiscount: 1.0,
-          bookPoster: "http://bookpicture.molycao.cn/1609761036572.png",
-        },
-        {
-          bookId: 16,
-          bookName: "经典系列红色时钟",
-          categoryId: 2,
-          bookCategory: {
-            categoryId: 2,
-            categoryName: "塑料",
-            parentId: 0,
-          },
-          bookStandard: null,
-          bookAuthor: null,
-          bookSupplierId: 2,
-          supplier: {
-            supplierId: 2,
-            supplierName: "当当",
-            supplierPrivy: "李国庆",
-            supplierAddress: "北京",
-            supplirePhone: "542225",
-          },
-          bookPrice: 580.0,
-          bookDiscount: 1.0,
-          bookPoster:
-            "http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_w330h330.png?v=1484817638",
-        },
-        {
-          bookId: 17,
-          bookName: "简约原木餐盘",
-          categoryId: 3,
-          bookCategory: {
-            categoryId: 3,
-            categoryName: "木制",
-            parentId: 0,
-          },
-          bookStandard: "",
-          bookAuthor: "",
-          bookSupplierId: 1,
-          supplier: {
-            supplierId: 1,
-            supplierName: "阿里巴巴",
-            supplierPrivy: "马云",
-            supplierAddress: "杭州",
-            supplirePhone: "123456",
-          },
-          bookPrice: 100.0,
-          bookDiscount: 1.0,
-          bookPoster: "http://bookpicture.molycao.cn/1609761036572.png",
-        },
-      ],
+      goods: [],
+      category: ["不锈钢", "原料水泥", "塑料", "木质"],
     };
+  },
+  methods: {
+    get_good_with_category(name) {
+      axios
+        .get("http://www.molycao.cn:8088/bookswithcategory?category=" + name)
+        .then((res) => {
+          this.goods = res.data.extend.books;
+        });
+    },
+  },
+  mounted() {
+    axios.get("http://www.molycao.cn:8088/books").then((res) => {
+      this.goods = res.data.extend.books;
+    });
   },
   components: {
     Header,
