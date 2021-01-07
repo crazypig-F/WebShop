@@ -13,17 +13,17 @@
                 </div>
                 <div class="inter22">
                     <ul>
-                        <li v-for="item in items" :key="item.id">
-                            <input type="checkbox" class="check" :checked = item.isChecked @click=check(item)><img :src=item.pic alt="">
-                            <span class="title">{{item.title}}</span>
+                        <li v-for="item in items" :key="item.book.bookId">
+                            <input type="checkbox" class="check" :checked = item.isChecked @click=check(item)><img :src=item.book.bookPoster alt="">
+                            <span class="title">{{item.book.bookName}}</span>
                             <span class="item-menu">
-                                <span class="price">¥{{item.price}}</span>
+                                <span class="price">¥{{item.book.bookPrice}}</span>
                                 <span class="count-button">
                                     <input type="button" value="-" class="sub" @click="sub(item)"/>
-                                    <span class="count">{{item.count}}</span>
+                                    <span class="count">{{item.goodsnum}}</span>
                                     <input type="button" value="+" class="add" @click="add(item)">
                                 </span>
-                                <span class="total">¥{{item.price*item.count}}</span>
+                                <span class="total">¥{{item.book.bookPrice*item.goodsnum}}</span>
 
                                 <span class="del" @click=deleteItem(item)>删除</span>
                             </span>
@@ -58,8 +58,9 @@
 </template>
 
 <script>
-import Header from "./header";
-import Footer from "./footer";
+import Header from "./header"
+import Footer from "./footer"
+import axios from "axios"
 export default {
   components: {
     Header,
@@ -70,75 +71,36 @@ export default {
           isAllChecked : false,
           totalcount : 0,
           totalprice : 0,
-          items: [
-              {
-                  id:1,
-                  pic:"http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_140x140.png?v=1484817638",
-                  title:"经典系列计算机",
-                  price:200,
-                  count:1,
-                  isChecked:false
-              },
-              {
-                  id:2,
-                  pic:"http://asset.ibanquan.com/image/5880828b9bedc407dc000014/s_140x140.png?v=1484817035",
-                  title:"黑陶自然花香蜡烛",
-                  price:123,
-                  count:3,
-                  isChecked:false
-              },
-              {
-                  id:3,
-                  pic:"http://asset.ibanquan.com/image/588082c50dd76c1c9700001b/s_140x140.png?v=1484817093",
-                  title:"便携简约清扫扫帚",
-                  price:312,
-                  count:2,
-                  isChecked:false
-              },
-              {
-                  id:4,
-                  pic:"http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
-                  title:"简约木制餐盘",
-                  price:300,
-                  count:1,
-                  isChecked:false
-              },
-              {
-                  id:4,
-                  pic:"http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
-                  title:"简约木制餐盘",
-                  price:300,
-                  count:1,
-                  isChecked:false
-              }
-          ],
+          items: [],
           selectItems: []
       }
   },
   methods : {
       add (item) {
-          item.count ++;
+          item.goodsnum ++;
           if (item.isChecked) {
-              this.totalprice += item.price
+              this.totalprice += item.book.bookPrice
           }
       },
       sub (item) {
-          if (item.count > 1) {
-              item.count--;
+          if (item.goodsnum > 1) {
+              item.goodsnum--;
               if (item.isChecked) {
-              this.totalprice -= item.price
+              this.totalprice -= item.book.bookPrice
           }
           }
       },
       check(item) {
-          item.isChecked = !item.isChecked;
-          if (item.isChecked) {
+          console.log(item.ischeck)
+          if (item.ischeck == 0) {
+              item.ischeck = 1
               this.totalcount++
-              this.totalprice += item.price * item.count
+              this.totalprice += item.book.bookPrice * item.goodsnum
               this.selectItems.push(item)
           } else {
+              item.ischeck = 0
               this.totalcount--
-              this.totalprice -= item.price * item.count
+              this.totalprice -= item.book.bookPrice * item.goodsnum
               var index = this.items.indexOf(item)
               if (index != -1) {
                   this.selectItems.splice(index, 1)
@@ -152,7 +114,7 @@ export default {
           this.items.forEach((item) => {
               if (this.isAllChecked) {
                   this.totalcount++
-                  this.totalprice += item.price*item.count
+                  this.totalprice += item.book.bookPrice*item.goodsnum
                   item.isChecked = true
                   var index = this.selectItems.indexOf(item)
                   if (index == -1) {
@@ -176,7 +138,18 @@ export default {
           this.selectItems.forEach((item) => {
               this.deleteItem(item)
           })
+      },
+      get() {
+          axios.get("http://www.molycao.cn:8088/querycart?userId=1").then(res => {
+              if (res.request.status == 200) {
+                  this.items = res.data.extend.carts
+                  console.log(this.items)
+              }
+          })
       }
+  },
+  mounted() {
+      this.get()
   }
 };
 
