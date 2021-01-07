@@ -1,57 +1,67 @@
 <template>
-    <!-- banner部分开始 -->
-	<div class="banner">
-		<ul class="pic">
-			<li class = "cur"><a href="#"><img src="../assets/images/img11.png" alt=""></a></li>
-			<li><a href="#"><img src="../assets/images/img12.png" alt=""></a></li>
-			<li><a href="#"><img src="../assets/images/img13.png" alt=""></a></li>
-		</ul>
-		<ol class = "circle">
-			<li class = "cur"></li>
-			<li></li>
-			<li></li>
-		</ol>
-	</div>
-	<!-- banner部分结束 -->
+	<div class="outer0">
+        <ul class="imgList">
+            <li style="z-index:1;"><a  href=""><img src="../assets/images/img11.png" alt=""></a></li>
+            <li><a  href=""><img src="../assets/images/img12.png" alt=""></a></li>
+            <li ><a  href=""><img src="../assets/images/img13.png" alt=""></a></li>
+        </ul>
+        <div class="focusList">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
 </template>
 
-<style scoped>
-/* banner部分 */
-.banner{
-	width: 100%;
-	padding-top: 69px;
-	position: relative;
-	height: 600px;
+<script>
+export default {
+	
 }
-.banner .pic li{
-	width: 100%;
-	position: absolute;
-	display: none;
+</script>
 
+<style scoped>
+*{
+    margin: 0;
+    padding: 0;
 }
-.banner .pic li img{
-	width: 100%;
+ul{
+    list-style: none;
 }
-.banner .pic li.cur{
-	display: block;
+img{
+    vertical-align: middle;
 }
-.banner .circle{
-	list-style: none;
-	position: absolute;
-	bottom: 64px;
-	width: 90px;
-	height: 4px;
-	left: 50%;
-	margin-left: -45px;
+.outer0{
+    position: relative;
+    width: 1226px;
+    height: 460px;
+    margin: 60px auto;
 }
-.banner .circle li{
-	width: 20px;
-	height: 4px;
-	background: #fff;
-	float: left;
-	margin: 0 5px;
+.outer0 .imgList li{
+    position: absolute;
+    top:50%;
+    margin-top: -235px;
+    width: 1226px;
+    height: 460px;
 }
-.banner .circle li.cur{
-	background:#C78A49;
+.outer0 .imgList li img{
+    width: 100%;
+    height: 100%;
+}
+.outer0 .focusList{
+    position: absolute;
+    bottom: 50px;
+    right: 600px;
+    z-index: 2;
+}
+.outer0 .focusList span{
+    float: left;
+    width: 20px;
+    height: 4px;
+    background-color: #C78A49;
+    border-radius: 1px;
+    margin-left: 10px;
+}
+.outer0 .focusList span.active{
+    background-color: #fff;
 }
 </style>

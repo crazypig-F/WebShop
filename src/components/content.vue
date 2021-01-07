@@ -10,7 +10,7 @@
         <div class="pro_pic">
           <div class="pro_c">
             <ul>
-              <li>
+              <li v-for="item in list" :key="item.id">
                 <router-link to="/detail" tag="a">
                   <img src="../assets/images/img23.png" alt="" />
                   <div class="cont">
@@ -18,33 +18,6 @@
                     <span>￥300</span>
                   </div>
                 </router-link>
-              </li>
-              <li>
-                <a href="/detail">
-                  <img src="../assets/images/img24.png" alt="" />
-                  <div class="cont">
-                    <h3>黑陶自然花香蜡烛</h3>
-                    <span>￥300</span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/detail">
-                  <img src="../assets/images/img25.png" alt="" />
-                  <div class="cont">
-                    <h3>黑陶自然花香蜡烛</h3>
-                    <span>￥300</span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/detail">
-                  <img src="../assets/images/img26.png" alt="" />
-                  <div class="cont">
-                    <h3>黑陶自然花香蜡烛</h3>
-                    <span>￥300</span>
-                  </div>
-                </a>
               </li>
             </ul>
           </div>
@@ -290,7 +263,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      list: [1, 2, 3, 4]
+    };
+  },
+};
 </script>
 
 <style scoped>

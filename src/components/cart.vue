@@ -40,7 +40,7 @@
             <div class="inter3">
                 <div class="inter31">
                     <div class="last">
-                        <a href="./青竹登录.html">确认结算</a>
+                        <router-link to='/paycheck' tag="a">确认结算</router-link>
                     </div>
                     <input type="checkbox" class="checkAll" :checked = checkalldata @click="checkall"><span class="s1">全选</span>
                     <span class="ss1">删除</span><span class="ss2">清除下架商品</span>

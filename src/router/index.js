@@ -6,6 +6,7 @@ import Cart from '../components/cart'
 import Login from '../components/login'
 import Register from '../components/register'
 import Detail from '../components/detail'
+import Paycheck from '../components/paycheck'
 
 const routes = [
   {
@@ -39,7 +40,11 @@ const routes = [
   {
     path: '/detail',
     component: Detail
-  }
+  },
+  {
+    path: '/paycheck',
+    component: Paycheck
+  },
 ]
 
 const router = createRouter({
