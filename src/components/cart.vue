@@ -19,28 +19,12 @@
                 </div>
                 <div class="inter22">
                     <ul>
-                        <li>
-                            <input type="checkbox" class="check" :checked = check1data @click="check1"><img src="../assets/images/s1.png" alt="">
-                            <span class="s1">经典系列红色时钟</span><span class="money">¥</span>
-                            <span class="price">{{prices1}}</span><input type="button" value="-" class="sub" @click="sub1()"/>
-                            <span class="count">{{count1}}</span><input type="button" value="+" class="add" @click="add1()">
-                            <span class="money1">¥</span><span class="total">{{prices1 * count1}}</span>
-                            <span class="del">删除</span>
-                        </li>
-                        <li>
-                            <input type="checkbox" class="check" :checked = check2data @click="check2"><img src="../assets/images/s2.png" alt="">
-                            <span class="s1">便携简约清扫扫帚</span><span class="money">¥</span>
-                            <span class="price">{{prices2}}</span><input type="button" value="-" class="sub" @click="sub2()">
-                            <span class="count">{{count2}}</span><input type="button" value="+" class="add" @click="add2()">
-                            <span class="money1">¥</span><span class="total">{{prices2 * count2}}</span>
-                            <span class="del">删除</span>
-                        </li>
-                        <li>
-                            <input type="checkbox" class="check" :checked = check3data @click="check3"><img src="../assets/images/s3.png" alt="">
-                            <span class="s1">黑色陶瓷研磨器皿</span> <span class="money">¥</span>
-                            <span class="price">{{prices3}}</span><input type="button" value="-" class="sub" @click="sub3()">
-                            <span class="count">{{count3}}</span><input type="button" value="+" class="add" @click="add3()">
-                            <span class="money1">¥</span><span class="total">{{prices3 * count3}}</span>
+                        <li v-for="item in items" :key="item.id">
+                            <input type="checkbox" class="check" :checked = check1data @click="check1"><img :src=item.pic alt="">
+                            <span class="s1">{{item.title}} </span><span class="money">¥</span>
+                            <span class="price">{{item.price}}</span><input type="button" value="-" class="sub" @click="sub(item)"/>
+                            <span class="count">{{item.count}}</span><input type="button" value="+" class="add" @click="add(item)">
+                            <span class="money1">¥</span><span class="total">{{item.price*item.count}}</span>
                             <span class="del">删除</span>
                         </li>
                     </ul>
@@ -94,17 +78,37 @@ export default {
           checkalldata : false,
           totalcount : 0,
           totalprice : 0,
+          items: [
+              {id:1,
+              pic:"http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_140x140.png?v=1484817638",
+              title:"经典系列计算机",
+              price:200,
+              count:1
+              },
+              {id:2,
+              pic:"http://asset.ibanquan.com/image/5880828b9bedc407dc000014/s_140x140.png?v=1484817035",
+              title:"黑陶自然花香蜡烛",
+              price:123,
+              count:3
+              },
+              {id:3,
+              pic:"http://asset.ibanquan.com/image/588082c50dd76c1c9700001b/s_140x140.png?v=1484817093",
+              title:"便携简约清扫扫帚",
+              price:312,
+              count:2
+              },
+              {id:5,
+              pic:"http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
+              title:"简约木制餐盘",
+              price:300,
+              count:1
+              }
+          ]
       }
   },
   methods : {
-      add1 () {
-          this.count1 ++;
-      },
-      add2 () {
-          this.count2 ++;
-      },
-      add3 () {
-          this.count3 ++;
+      add (item) {
+          item.count ++;
       },
       sub1 () {
           if (this.count1 > 1) {
