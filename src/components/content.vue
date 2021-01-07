@@ -12,10 +12,10 @@
             <ul>
               <li v-for="item in goods" :key="item.id">
                 <router-link to="/detail" tag="a">
-                  <img :src=item.bookPoster alt="" />
+                  <img :src="item.bookPoster" alt="" />
                   <div class="cont">
-                    <h3>{{item.bookName}}</h3>
-                    <span>￥{{item.bookPrice}}</span>
+                    <h3>{{ item.bookName }}</h3>
+                    <span>￥{{ item.bookPrice }}</span>
                   </div>
                 </router-link>
               </li>
@@ -34,9 +34,9 @@
         </div>
         <div class="pro2_c">
           <ul class="pro2_c_pic">
-            <li :class=item.class v-for="item in activities" :key="item.id">
+            <li :class="item.class" v-for="item in activities" :key="item.id">
               <a href="#">
-                <img :src=item.path alt="" />
+                <img :src="item.path" alt="" />
               </a>
               <span></span>
             </li>
@@ -58,10 +58,10 @@
             </li>
             <li v-for="item in goods" :key="item.id">
               <a href="#">
-                <img :src=item.bookPoster alt="" />
+                <img :src="item.bookPoster" alt="" />
                 <div class="cont">
-                  <h3>{{item.bookName}}</h3>
-                  <span>￥{{item.bookPrice}}</span>
+                  <h3>{{ item.bookName }}</h3>
+                  <span>￥{{ item.bookPrice }}</span>
                 </div>
               </a>
               <div class="mask">
@@ -78,10 +78,10 @@
             </li>
             <li v-for="item in goods" :key="item.id">
               <a href="#">
-                <img :src=item.bookPoster alt="" />
+                <img :src="item.bookPoster" alt="" />
                 <div class="cont">
-                  <h3>{{item.bookName}}</h3>
-                  <span>￥{{item.bookPrice}}</span>
+                  <h3>{{ item.bookName }}</h3>
+                  <span>￥{{ item.bookPrice }}</span>
                 </div>
               </a>
               <div class="mask">
@@ -177,6 +177,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -289,8 +290,15 @@ export default {
           class: "pic3 pic",
           path: require("../assets/images/img33.jpg"),
         },
-      ]
+      ],
     };
+  },
+  methods: {
+    test() {
+      axios.get("http://www.molycao.cn:8088/customers").then(res=>{
+        console.log(res)
+      })
+    },
   },
 };
 </script>
