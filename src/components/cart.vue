@@ -25,7 +25,7 @@
                                 </span>
                                 <span class="total">¥{{item.price*item.count}}</span>
 
-                                <span class="del">删除</span>
+                                <span class="del" @click=deleteItem(item)>删除</span>
                             </span>
                         </li>
                     </ul>
@@ -44,7 +44,7 @@
                         <router-link to='/paycheck' tag="a">确认结算</router-link>
                     </div>
                     <input type="checkbox" class="checkAll" :checked = isAllChecked @click="checkall"><span class="s1">全选</span>
-                    <span class="ss1">删除</span>
+                    <span class="ss1" @click=deleteSelectItems>删除</span>
                     <div class="foot">
                         已选<span class="totalCount">{{totalcount}}</span>件
                         合计(不含运费) : <span class="totalPrice">¥{{totalprice}}</span>元<br>
@@ -111,7 +111,8 @@ export default {
                   count:1,
                   isChecked:false
               }
-          ]
+          ],
+          selectItems: []
       }
   },
   methods : {
@@ -132,11 +133,16 @@ export default {
       check(item) {
           item.isChecked = !item.isChecked;
           if (item.isChecked) {
-              this.totalcount++;
+              this.totalcount++
               this.totalprice += item.price * item.count
+              this.selectItems.push(item)
           } else {
-              this.totalcount--;
+              this.totalcount--
               this.totalprice -= item.price * item.count
+              var index = this.items.indexOf(item)
+              if (index != -1) {
+                  this.selectItems.splice(index, 1)
+              }
           }
       },
       checkall() {
@@ -151,6 +157,17 @@ export default {
               } else {
                   item.isChecked = false
               }
+          })
+      },
+      deleteItem(item) {
+          var index = this.items.indexOf(item)
+          if (index != -1) {
+              this.items.splice(index, 1)
+          }
+      },
+      deleteSelectItems() {
+          this.selectItems.forEach((item) => {
+              this.deleteItem(item)
           })
       }
   }
