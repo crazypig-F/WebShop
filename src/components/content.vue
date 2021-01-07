@@ -10,41 +10,14 @@
         <div class="pro_pic">
           <div class="pro_c">
             <ul>
-              <li>
+              <li v-for="item in goods" :key="item.id">
                 <router-link to="/detail" tag="a">
-                  <img src="../assets/images/img23.png" alt="" />
+                  <img :src=item.bookPoster alt="" />
                   <div class="cont">
-                    <h3>黑陶自然花香蜡烛</h3>
-                    <span>￥300</span>
+                    <h3>{{item.bookName}}</h3>
+                    <span>￥{{item.bookPrice}}</span>
                   </div>
                 </router-link>
-              </li>
-              <li>
-                <a href="/detail">
-                  <img src="../assets/images/img24.png" alt="" />
-                  <div class="cont">
-                    <h3>黑陶自然花香蜡烛</h3>
-                    <span>￥300</span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/detail">
-                  <img src="../assets/images/img25.png" alt="" />
-                  <div class="cont">
-                    <h3>黑陶自然花香蜡烛</h3>
-                    <span>￥300</span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/detail">
-                  <img src="../assets/images/img26.png" alt="" />
-                  <div class="cont">
-                    <h3>黑陶自然花香蜡烛</h3>
-                    <span>￥300</span>
-                  </div>
-                </a>
               </li>
             </ul>
           </div>
@@ -61,21 +34,9 @@
         </div>
         <div class="pro2_c">
           <ul class="pro2_c_pic">
-            <li class="pic1 pic">
+            <li :class=item.class v-for="item in activities" :key="item.id">
               <a href="#">
-                <img src="../assets/images/img31.jpg" alt="" />
-              </a>
-              <span></span>
-            </li>
-            <li class="pic2 pic">
-              <a href="#">
-                <img src="../assets/images/img32.jpg" alt="" />
-              </a>
-              <span></span>
-            </li>
-            <li class="pic3 pic">
-              <a href="#">
-                <img src="../assets/images/img33.jpg" alt="" />
+                <img :src=item.path alt="" />
               </a>
               <span></span>
             </li>
@@ -95,49 +56,12 @@
               </a>
               <div class="mask"></div>
             </li>
-            <li>
+            <li v-for="item in goods" :key="item.id">
               <a href="#">
-                <img src="../assets/images/img41.png" alt="" />
+                <img :src=item.bookPoster alt="" />
                 <div class="cont">
-                  <h3>简约时尚水泥花瓶</h3>
-                  <span>￥450</span>
-                </div>
-              </a>
-              <div class="mask">
-                <a href="#" class="btn"> 查看详情 </a>
-              </div>
-            </li>
-
-            <li>
-              <a href="#">
-                <img src="../assets/images/img42.png" alt="" />
-                <div class="cont">
-                  <h3>简约时尚水泥花瓶</h3>
-                  <span>￥450</span>
-                </div>
-              </a>
-              <div class="mask">
-                <a href="#" class="btn"> 查看详情 </a>
-              </div>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../assets/images/img43.png" alt="" />
-                <div class="cont">
-                  <h3>简约时尚水泥花瓶</h3>
-                  <span>￥450</span>
-                </div>
-              </a>
-              <div class="mask">
-                <a href="#" class="btn"> 查看详情 </a>
-              </div>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../assets/images/img44.png" alt="" />
-                <div class="cont">
-                  <h3>简约时尚水泥花瓶</h3>
-                  <span>￥450</span>
+                  <h3>{{item.bookName}}</h3>
+                  <span>￥{{item.bookPrice}}</span>
                 </div>
               </a>
               <div class="mask">
@@ -152,49 +76,12 @@
               </a>
               <div class="mask"></div>
             </li>
-            <li>
+            <li v-for="item in goods" :key="item.id">
               <a href="#">
-                <img src="../assets/images/img46.png" alt="" />
+                <img :src=item.bookPoster alt="" />
                 <div class="cont">
-                  <h3>简约时尚水泥花瓶</h3>
-                  <span>￥450</span>
-                </div>
-              </a>
-              <div class="mask">
-                <a href="#" class="btn"> 查看详情 </a>
-              </div>
-            </li>
-
-            <li>
-              <a href="#">
-                <img src="../assets/images/img47.png" alt="" />
-                <div class="cont">
-                  <h3>简约时尚水泥花瓶</h3>
-                  <span>￥450</span>
-                </div>
-              </a>
-              <div class="mask">
-                <a href="#" class="btn"> 查看详情 </a>
-              </div>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../assets/images/img48.png" alt="" />
-                <div class="cont">
-                  <h3>简约时尚水泥花瓶</h3>
-                  <span>￥450</span>
-                </div>
-              </a>
-              <div class="mask">
-                <a href="#" class="btn"> 查看详情 </a>
-              </div>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../assets/images/img49.png" alt="" />
-                <div class="cont">
-                  <h3>简约时尚水泥花瓶</h3>
-                  <span>￥450</span>
+                  <h3>{{item.bookName}}</h3>
+                  <span>￥{{item.bookPrice}}</span>
                 </div>
               </a>
               <div class="mask">
@@ -290,7 +177,122 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      goods: [
+        {
+          bookId: 15,
+          bookName: "不锈钢时尚咖啡水壶",
+          categoryId: 0,
+          bookCategory: {
+            categoryId: 0,
+            categoryName: "不锈钢",
+            parentId: 0,
+          },
+          bookStandard: null,
+          bookAuthor: null,
+          bookSupplierId: 1,
+          supplier: {
+            supplierId: 1,
+            supplierName: "阿里巴巴",
+            supplierPrivy: "马云",
+            supplierAddress: "杭州",
+            supplirePhone: "123456",
+          },
+          bookPrice: 300.0,
+          bookDiscount: 1.0,
+          bookPoster:
+            "http://asset.ibanquan.com/image/5880851f3f8f90098800003d/s_w330h330.png?v=1484817695",
+        },
+        {
+          bookId: 16,
+          bookName: "经典系列红色时钟",
+          categoryId: 2,
+          bookCategory: {
+            categoryId: 2,
+            categoryName: "塑料",
+            parentId: 0,
+          },
+          bookStandard: null,
+          bookAuthor: null,
+          bookSupplierId: 2,
+          supplier: {
+            supplierId: 2,
+            supplierName: "当当",
+            supplierPrivy: "李国庆",
+            supplierAddress: "北京",
+            supplirePhone: "542225",
+          },
+          bookPrice: 580.0,
+          bookDiscount: 1.0,
+          bookPoster:
+            "http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_w330h330.png?v=1484817638",
+        },
+        {
+          bookId: 17,
+          bookName: "简约原木餐盘",
+          categoryId: 3,
+          bookCategory: {
+            categoryId: 3,
+            categoryName: "木制",
+            parentId: 0,
+          },
+          bookStandard: "",
+          bookAuthor: "",
+          bookSupplierId: 1,
+          supplier: {
+            supplierId: 1,
+            supplierName: "阿里巴巴",
+            supplierPrivy: "马云",
+            supplierAddress: "杭州",
+            supplirePhone: "123456",
+          },
+          bookPrice: 100.0,
+          bookDiscount: 1.0,
+          bookPoster: "http://bookpicture.molycao.cn/1609761036572.png",
+        },
+        {
+          bookId: 17,
+          bookName: "简约原木餐盘",
+          categoryId: 3,
+          bookCategory: {
+            categoryId: 3,
+            categoryName: "木制",
+            parentId: 0,
+          },
+          bookStandard: "",
+          bookAuthor: "",
+          bookSupplierId: 1,
+          supplier: {
+            supplierId: 1,
+            supplierName: "阿里巴巴",
+            supplierPrivy: "马云",
+            supplierAddress: "杭州",
+            supplirePhone: "123456",
+          },
+          bookPrice: 100.0,
+          bookDiscount: 1.0,
+          bookPoster: "http://bookpicture.molycao.cn/1609761036572.png",
+        },
+      ],
+      activities: [
+        {
+          class: "pic1 pic",
+          path: require("../assets/images/img31.jpg"),
+        },
+        {
+          class: "pic2 pic",
+          path: require("../assets/images/img32.jpg"),
+        },
+        {
+          class: "pic3 pic",
+          path: require("../assets/images/img33.jpg"),
+        },
+      ]
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -407,8 +409,8 @@ a {
 .qingzhu_content_c .pro2 .pro2_c {
   height: 380px;
 }
-.qingzhu_content_c .pro2 .pro2_c .pro2_c_pic {
-}
+/* .qingzhu_content_c .pro2 .pro2_c .pro2_c_pic {
+} */
 .qingzhu_content_c .pro2 .pro2_c .pro2_c_pic .pic1 {
   width: 680px;
   height: 380px;

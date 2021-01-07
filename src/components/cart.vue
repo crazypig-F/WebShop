@@ -1,31 +1,32 @@
 <template>
-    <div class="s_content">
+    <div class="body">
         <Header></Header>
-        <div class="outer">
-            <div class="shop">
-                <p>3件商品 总计:¥1111</p>
-                <div class="shop1"><a href="购物车.html">去结算</a></div>
-            </div>
-        </div>
         <div class="outer9">
             <div class="inter1">
                 <h1>购物车</h1>
             </div>
             <div class="inter2">
                 <div class="inter21">
-                    <input type="checkbox" class="checkAll" :checked = checkalldata @click="checkall"><span class="s1">全选</span>
+                    <input type="checkbox" class="checkAll" :checked = isAllChecked @click="checkall"><span class="s1">全选</span>
                     <span class="s2">商品名称</span><span class="s3">单价</span>
                     <span class="count">数量</span><span class="total">小计</span><span class="del">操作</span>
                 </div>
                 <div class="inter22">
                     <ul>
                         <li v-for="item in items" :key="item.id">
-                            <input type="checkbox" class="check" :checked = check1data @click="check1"><img :src=item.pic alt="">
-                            <span class="s1">{{item.title}} </span><span class="money">¥</span>
-                            <span class="price">{{item.price}}</span><input type="button" value="-" class="sub" @click="sub(item)"/>
-                            <span class="count">{{item.count}}</span><input type="button" value="+" class="add" @click="add(item)">
-                            <span class="money1">¥</span><span class="total">{{item.price*item.count}}</span>
-                            <span class="del">删除</span>
+                            <input type="checkbox" class="check" :checked = item.isChecked @click=check(item)><img :src=item.pic alt="">
+                            <span class="title">{{item.title}}</span>
+                            <span class="item-menu">
+                                <span class="price">¥{{item.price}}</span>
+                                <span class="count-button">
+                                    <input type="button" value="-" class="sub" @click="sub(item)"/>
+                                    <span class="count">{{item.count}}</span>
+                                    <input type="button" value="+" class="add" @click="add(item)">
+                                </span>
+                                <span class="total">¥{{item.price*item.count}}</span>
+
+                                <span class="del">删除</span>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -42,8 +43,8 @@
                     <div class="last">
                         <a href="./青竹登录.html">确认结算</a>
                     </div>
-                    <input type="checkbox" class="checkAll" :checked = checkalldata @click="checkall"><span class="s1">全选</span>
-                    <span class="ss1">删除</span><span class="ss2">清除下架商品</span>
+                    <input type="checkbox" class="checkAll" :checked = isAllChecked @click="checkall"><span class="s1">全选</span>
+                    <span class="ss1">删除</span>
                     <div class="foot">
                         已选<span class="totalCount">{{totalcount}}</span>件
                         合计(不含运费) : <span class="totalPrice">¥{{totalprice}}</span>元<br>
@@ -66,42 +67,49 @@ export default {
   },
   data: function() {
       return {
-          prices1 : 200,
-          prices2 : 239,
-          prices3 : 429,
-          count1 : 1,
-          count2 : 2,
-          count3 : 3,
-          check1data : false,
-          check2data : false,
-          check3data : false,
-          checkalldata : false,
+          isAllChecked : false,
           totalcount : 0,
           totalprice : 0,
           items: [
-              {id:1,
-              pic:"http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_140x140.png?v=1484817638",
-              title:"经典系列计算机",
-              price:200,
-              count:1
+              {
+                  id:1,
+                  pic:"http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_140x140.png?v=1484817638",
+                  title:"经典系列计算机",
+                  price:200,
+                  count:1,
+                  isChecked:false
               },
-              {id:2,
-              pic:"http://asset.ibanquan.com/image/5880828b9bedc407dc000014/s_140x140.png?v=1484817035",
-              title:"黑陶自然花香蜡烛",
-              price:123,
-              count:3
+              {
+                  id:2,
+                  pic:"http://asset.ibanquan.com/image/5880828b9bedc407dc000014/s_140x140.png?v=1484817035",
+                  title:"黑陶自然花香蜡烛",
+                  price:123,
+                  count:3,
+                  isChecked:false
               },
-              {id:3,
-              pic:"http://asset.ibanquan.com/image/588082c50dd76c1c9700001b/s_140x140.png?v=1484817093",
-              title:"便携简约清扫扫帚",
-              price:312,
-              count:2
+              {
+                  id:3,
+                  pic:"http://asset.ibanquan.com/image/588082c50dd76c1c9700001b/s_140x140.png?v=1484817093",
+                  title:"便携简约清扫扫帚",
+                  price:312,
+                  count:2,
+                  isChecked:false
               },
-              {id:5,
-              pic:"http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
-              title:"简约木制餐盘",
-              price:300,
-              count:1
+              {
+                  id:4,
+                  pic:"http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
+                  title:"简约木制餐盘",
+                  price:300,
+                  count:1,
+                  isChecked:false
+              },
+              {
+                  id:4,
+                  pic:"http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
+                  title:"简约木制餐盘",
+                  price:300,
+                  count:1,
+                  isChecked:false
               }
           ]
       }
@@ -109,67 +117,41 @@ export default {
   methods : {
       add (item) {
           item.count ++;
-      },
-      sub1 () {
-          if (this.count1 > 1) {
-              this.count1--;
+          if (item.isChecked) {
+              this.totalprice += item.price
           }
       },
-      sub2 () {
-          if (this.count2 > 1) {
-              this.count2--;
+      sub (item) {
+          if (item.count > 1) {
+              item.count--;
+              if (item.isChecked) {
+              this.totalprice -= item.price
+          }
           }
       },
-      sub3 () {
-          if (this.count3 > 1) {
-              this.count3--;
-          }
-      },
-      check1() {
-          this.check1data = !this.check1data;
-          if (this.check1data) {
+      check(item) {
+          item.isChecked = !item.isChecked;
+          if (item.isChecked) {
               this.totalcount++;
-              this.totalprice += this.prices1 * this.count1
+              this.totalprice += item.price * item.count
           } else {
               this.totalcount--;
-              this.totalprice -= this.prices1 * this.count1
-          }
-      },
-      check2() {
-          this.check2data = !this.check2data;
-          if (this.check2data) {
-              this.totalcount++;
-              this.totalprice += this.prices2 * this.count2
-          } else {
-              this.totalcount--;
-              this.totalprice -= this.prices2 * this.count2
-          }
-      },
-      check3() {
-          this.check3data = !this.check3data;
-          if (this.check3data) {
-              this.totalcount++;
-              this.totalprice += this.prices3 * this.count3
-          } else {
-              this.totalcount--;
-              this.totalprice -= this.prices3 * this.count3
+              this.totalprice -= item.price * item.count
           }
       },
       checkall() {
-          this.checkalldata = !this.checkalldata;
-          if (this.checkalldata) {
-              this.totalcount = 3;
-              this.totalprice = this.prices1 * this.count1 + this.prices2 * this.count2 + this.prices3 * this.count3;
-              this.check1data = true;
-              this.check2data = true;
-              this.check3data = true;
-          } else {
-              this.totalcount = 0;
-              this.totalprice = 0;
-              this.check1data = false;
-              this.check2data = false;
-              this.check3data = false;
-          }
+          this.isAllChecked = !this.isAllChecked;
+          this.totalcount = 0
+          this.totalprice = 0
+          this.items.forEach((item) => {
+              if (this.isAllChecked) {
+                  this.totalcount++
+                  this.totalprice += item.price*item.count
+                  item.isChecked = true
+              } else {
+                  item.isChecked = false
+              }
+          })
       }
   }
 };
@@ -177,10 +159,9 @@ export default {
 </script>
 
 <style scoped>
-.s_content {
+.body {
   width: 100%;
   background: #f2f2f2;
-  padding-bottom: 60px;
 }
 img {
     vertical-align: middle;
@@ -194,17 +175,17 @@ img {
     margin: 0 auto;
     width: 1120px;
     height: 94px;
-
 }
 .outer9 .inter1 h1{
     font-weight: normal;
     padding-top: 40px;
-    margin-top: 60px;
+    margin-top: 50px;
+    font-size: 25px;
+    color: rgba(48, 65, 4, 0.562);
 }
 .outer9 .inter2{
     width: 1120px;
-    height: 492px;
-    /*background-color: #795da3;*/
+    height: auto;
     margin: 0 auto;
     margin-bottom: 10px;
 }
@@ -235,23 +216,19 @@ img {
     margin-left: 40px;
 }
 .outer9 .inter2 .inter21 .s3{
-     margin-left: 500px;
+     margin-left: 550px;
 }
 .outer9 .inter2 .inter21 .count{
-    margin-left: 75px;
+    margin-left: 90px;
 }
 .outer9 .inter2 .inter21 .total{
-    margin-left: 95px;
-}
-.outer9 .inter2 .money1{
     margin-left: 90px;
 }
 .outer9 .inter2 .inter21 .del{
-    margin-left: 90px;
+    margin-left: 87px;
 }
 .outer9 .inter2 .inter22{
     width: 1118px;
-    height: 326px;
     line-height: 100px;
     font-size: 12px;
     color: #666666;
@@ -270,27 +247,21 @@ img {
     list-style: none;
     border: 0.5px solid #cccccc;
 }
-.outer9 .inter2 .inter22 .money{
-    margin-left: 435px;
+.outer9 .inter2 .inter22 ul li .item-menu{
+    float: right;
+    width: 40%;
+    display: inline-flex;
+    justify-content: space-around;
 }
-.outer9 .inter2 .inter22 .sub{
-    margin-left: 70px;
-}
-.outer9 .inter2 .inter22 .add{
-    margin-left: 5px;
-}
-.outer9 .inter2 .del{
-    margin-left: 80px;
-}
+
 .outer9 .inter3{
     width: 1118px;
-    height: 90px;
+    height: 100%;
     margin: 0 auto 50px;
     background-color: #ffffff;
     border: 0.5px solid #cccccc;
     font-size: 12px;
     color: #666666;
-    /*display: none;*/
 }
 .outer9 .inter3 .inter31{
     width: 1058px;
@@ -388,4 +359,5 @@ img {
     font-size: 12px;
     color: #ffffff;text-align: center;
 }
+
 </style>
