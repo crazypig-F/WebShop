@@ -154,10 +154,17 @@ export default {
                   this.totalcount++
                   this.totalprice += item.price*item.count
                   item.isChecked = true
+                  var index = this.selectItems.indexOf(item)
+                  if (index == -1) {
+                      this.selectItems.push(item)
+                  }
               } else {
                   item.isChecked = false
               }
           })
+          if (!this.isAllChecked && this.selectItems.length > 0){
+              this.selectItems.splice(0)
+          }
       },
       deleteItem(item) {
           var index = this.items.indexOf(item)
