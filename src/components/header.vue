@@ -67,12 +67,11 @@
       </ul>
       <!-- <a href="#" class="search"></a> -->
       <div class="reg">
-        <router-link to='/cart' tag="a">
           <div class="ico">
             <span class="ico_c"></span>
             <div class="settle">
               <p class="con">0件商品 共计：<span>￥0</span></p>
-              <a href="#" class="btn">结算</a>
+              <router-link to='/cart' tag="a"><a href="#" class="btn">去看看</a></router-link>
             </div>
             <span class="con"> 0 </span>
           </div>
@@ -81,7 +80,6 @@
             <span>&nbsp;|&nbsp;</span>
             <router-link to='/register' tag="a">注册</router-link>
           </div>
-        </router-link>
       </div>
     </div>
   </div>
