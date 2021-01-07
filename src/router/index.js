@@ -11,7 +11,7 @@ import Paycheck from '../components/paycheck'
 const routes = [
   {
     path: '/',
-    redirect: '/index'
+    redirect: '/login'
   },
   {
     path: '/index',
