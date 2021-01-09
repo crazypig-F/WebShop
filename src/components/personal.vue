@@ -21,9 +21,10 @@
             <div class="list-item">
               <ul>
                 <li class="list-title">订单中心</li>
+                <router-link to="/myolder" tag="a">
                 <a href="">
                   <li class="list-content">我的订单</li>
-                </a>
+                </a></router-link>
                 <a href="">
                   <li class="list-content">评价晒单</li>
                 </a>
@@ -67,9 +68,7 @@
           <div class="box1">
             <img class="head-img" src="../assets/images/img25.png" />
             <div class="content">
-              <div class="name">CrazyPig</div>
-              <div class="text">可用积分</div>
-              <div class="number">888</div>
+              <div class="name">{{userName}}</div>
             </div>
           </div>
           <div class="box2">
@@ -94,7 +93,7 @@
           </div>
         </div>
         <div class="line2">
-      
+          
         </div>
       </div>
     </div>
@@ -115,6 +114,9 @@ export default {
           order : [],
       }
   },
+  mounted() {
+    this.userName = localStorage.getItem("username")
+  }
 };
 </script>
 <style scoped>
@@ -229,9 +231,11 @@ a{
 .s_content .s_content_c .right .box1 .content .name {
   font-size: 20px;
   font-weight: 600;
-  color: rgb(221, 25, 247);
-  margin: 5px;
+  color: rgb(45, 124, 65);
+  margin: 10px;
+  line-height: 100px;
   text-align: center;
+  vertical-align: middle;
 }
 .s_content .s_content_c .right .box1 .content {
   width: 50%;

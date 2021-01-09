@@ -7,6 +7,7 @@ import Login from '../components/login'
 import Register from '../components/register'
 import Detail from '../components/detail'
 import Paycheck from '../components/paycheck'
+import MyOlder from '../components/myolder'
 
 const routes = [
   {
@@ -45,6 +46,10 @@ const routes = [
     path: '/paycheck',
     component: Paycheck
   },
+  {
+    path: '/myolder',
+    component: MyOlder
+  }
 ]
 
 const router = createRouter({
