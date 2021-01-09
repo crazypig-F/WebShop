@@ -4,20 +4,20 @@
     <div class="s_content_c inner_c">
       <div class="s_info">
         <div class="s_title">
-          <a href="#"> 首页 </a>
+          <router-link to="/index" tag="a">首页</router-link>
           &gt;
           <span> 所有商品 </span>
           &gt;
-          <span> {{select_category}} </span>
+          <span> {{ select_category }} </span>
         </div>
         <div class="screen">
           <table>
             <tr class="t1">
               <th>品牌</th>
               <td>
-                <a href="#">无印</a>
-                <a href="#">博朗</a>
-                <a href="#">花印</a>
+                <a href="javascript:void(0);">无印</a>
+                <a href="javascript:void(0);">博朗</a>
+                <a href="javascript:void(0);">花印</a>
               </td>
             </tr>
             <tr class="t2">
@@ -37,13 +37,13 @@
         <div class="fun">
           <div class="sort">
             <span>排序：</span>
-            <a href="#" class="s1"> <i></i>销量 </a>
-            <a href="#" class="s2"> <i></i>价格 </a>
-            <a href="#" class="s3"> <i></i>上架时间 </a>
+            <a href="javascript:void(0);" class="s1"> <i></i>销量 </a>
+            <a href="javascript:void(0);" class="s2"> <i></i>价格 </a>
+            <a href="javascript:void(0);" class="s3"> <i></i>上架时间 </a>
           </div>
           <div class="swi">
             <span>仅显示有货：</span>
-            <a href="#">
+            <a href="javascript:void(0);">
               <i></i>
             </a>
           </div>
@@ -54,7 +54,7 @@
         </div>
         <div class="s_prod">
           <ul class="pub_pro">
-            <li v-for="item in goods" :key="item.id">
+            <li v-for="item in show_goods" :key="item.id">
               <img :src="item.bookPoster" alt="" />
               <div class="cont">
                 <h3>{{ item.bookName }}</h3>
@@ -67,10 +67,17 @@
           </ul>
         </div>
         <div class="pages">
-          <a href="#">&lt;</a>
-          <a href="#" class="tol cur">1</a>
-          <a href="#" class="tol">2</a>
-          <a href="#">&gt;</a>
+          <a href="javascript:void(0);">&lt;</a>
+          <a
+            v-for="item in pages"
+            :key="item.id"
+            href="javascript:void(0);"
+            class="tol"
+            @click="change(item)"
+            >{{ item }}</a
+          >
+          <a href="javascript:void(0);" class="tol cur">{{ now_page }}</a>
+          <a href="javascript:void(0);">&gt;</a>
         </div>
       </div>
     </div>
@@ -87,57 +94,119 @@ export default {
   data() {
     return {
       goods: [],
+      show_goods: [],
       total_num: 0,
+      show_num: 8,
+      show_page: 0,
+      pages: [],
+      now_page: 1,
       category: ["不锈钢", "原料水泥", "塑料", "木质"],
       select_category: "",
     };
-  },
-  mounted() {
-    axios.get("http://www.molycao.cn:8088/books").then((res) => {
-      this.goods = res.data.extend.books;
-    });
   },
   components: {
     Header,
     Footer,
   },
-  computed: {
-    ...mapState(["select_category"]),
-  },
   methods: {
     get_goods() {
-      console.log(this.select_category);
-      if (this.select_category == "") {
+      if (this.$route.params.category == "a") {
         axios.get("http://www.molycao.cn:8088/books").then((res) => {
           this.goods = res.data.extend.books;
+          let goods = [];
+
+          for (
+            let index = 0;
+            index < this.show_num &&
+            (this.now_page - 1) * this.show_num + index < this.goods.length;
+            index++
+          ) {
+            const element = this.goods[
+              (this.now_page - 1) * this.show_num + index
+            ];
+            goods.push(element);
+          }
+          this.show_goods = goods;
           this.total_num = this.goods.length;
+          let i = 1;
+          for (let index = 0; index < this.total_num; index += this.show_num) {
+            this.pages.push(i++);
+          }
         });
       } else {
+        this.select_category = this.$route.params.category;
         axios
           .get(
             "http://www.molycao.cn:8088/bookswithcategory?category=" +
-              this.select_category
+              this.$route.params.category
           )
           .then((res) => {
             this.goods = res.data.extend.books;
+            let goods = [];
+
+            for (
+              let index = 0;
+              index < this.show_num &&
+              (this.now_page - 1) * this.show_num + index < this.goods.length;
+              index++
+            ) {
+              const element = this.goods[
+                (this.now_page - 1) * this.show_num + index
+              ];
+              goods.push(element);
+            }
+            this.show_goods = goods;
             this.total_num = this.goods.length;
+            let i = 1;
+            for (
+              let index = 0;
+              index < this.total_num;
+              index += this.show_num
+            ) {
+              this.pages.push(i++);
+            }
           });
       }
     },
     select(item) {
-      this.select_category = item
+      this.$router.push({ path: `/all/` + item });
+      this.select_category = item;
       axios
         .get("http://www.molycao.cn:8088/bookswithcategory?category=" + item)
         .then((res) => {
           this.goods = res.data.extend.books;
+          let goods = [];
+          for (
+            let index = 0;
+            index < Math.min(this.show_num, this.goods.length);
+            index++
+          ) {
+            const element = this.goods[index];
+            goods.push(element);
+          }
+          this.show_goods = goods;
           this.total_num = this.goods.length;
         });
     },
     show_detail(item) {
-      this.$router.push({ path: `/detail/` + item.bookId});
+      this.$router.push({ path: `/detail/` + item.bookId });
+    },
+    change(item) {
+      this.now_page = item;
+      let goods = [];
+      for (
+        let index = 0;
+        index < this.show_num &&
+        (this.now_page - 1) * this.show_num + index < this.goods.length;
+        index++
+      ) {
+        const element = this.goods[(this.now_page-1) * this.show_num + index];
+        goods.push(element);
+      }
+      this.show_goods = goods
     },
   },
-  created() {
+  mounted() {
     this.get_goods();
   },
 };
