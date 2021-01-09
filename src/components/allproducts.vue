@@ -133,6 +133,45 @@ export default {
             this.pages.push(i++);
           }
         });
+      } else if (this.$route.params.category == "德国不锈钢厨具") {
+        axios
+          .get(
+            "http://www.molycao.cn:8088/activitysWithName?activityName=德国不锈钢厨具"
+          )
+          .then((res) => {
+            for (
+              let index = 0;
+              index < res.data.extend.activitys.length;
+              index++
+            ) {
+              res.data.extend.activitys[index].book.bookPrice =
+                res.data.extend.activitys[index].book.bookPrice *
+                res.data.extend.activitys[index].activityDiscount;
+              this.goods.push(res.data.extend.activitys[index].book);
+            }
+            let goods = [];
+            for (
+              let index = 0;
+              index < this.show_num &&
+              (this.now_page - 1) * this.show_num + index < this.goods.length;
+              index++
+            ) {
+              const element = this.goods[
+                (this.now_page - 1) * this.show_num + index
+              ];
+              goods.push(element);
+            }
+            this.show_goods = goods;
+            this.total_num = this.goods.length;
+            let i = 1;
+            for (
+              let index = 0;
+              index < this.total_num;
+              index += this.show_num
+            ) {
+              this.pages.push(i++);
+            }
+          });
       } else {
         this.select_category = this.$route.params.category;
         axios
@@ -200,10 +239,10 @@ export default {
         (this.now_page - 1) * this.show_num + index < this.goods.length;
         index++
       ) {
-        const element = this.goods[(this.now_page-1) * this.show_num + index];
+        const element = this.goods[(this.now_page - 1) * this.show_num + index];
         goods.push(element);
       }
-      this.show_goods = goods
+      this.show_goods = goods;
     },
   },
   mounted() {

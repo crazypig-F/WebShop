@@ -80,6 +80,7 @@ export default {
           alert("加入购物车失败")
         } else {
           alert("购物车添加成功")
+          location.reload();
         }
       })
     },

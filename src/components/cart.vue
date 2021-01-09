@@ -151,6 +151,7 @@ export default {
                       this.items.splice(index, 1)
                   }
                   alert("删除成功")
+                  location.reload();
               }
           })
       },
