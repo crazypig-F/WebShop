@@ -114,21 +114,20 @@ export default {
         }
       })
     },
-<<<<<<< HEAD
     logout(){
       localStorage.removeItem('login');
       localStorage.removeItem('username');
+      localStorage.removeItem('userid');
       this.$router.push({ path: `/login` });
     },
-    ...mapMutations(["set_select_category"]),
-=======
+
     setCart() {
       this.cartItems.forEach((item) => {
         this.totalcount++
         this.totalprice += item.book.bookPrice*item.goodsnum
       })
     }
->>>>>>> origin/release/20201127
+
   },
   mounted() {
     this.getCart()
