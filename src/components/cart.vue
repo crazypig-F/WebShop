@@ -91,7 +91,6 @@ export default {
           }
       },
       check(item) {
-          console.log(item.ischeck)
           if (item.ischeck == 0) {
               item.ischeck = 1
               this.totalcount++
@@ -143,7 +142,6 @@ export default {
           axios.get("http://www.molycao.cn:8088/querycart?userId=1").then(res => {
               if (res.request.status == 200) {
                   this.items = res.data.extend.carts
-                  console.log(this.items)
               }
           })
       }
