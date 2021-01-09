@@ -5,24 +5,30 @@
             <h1 class="content-title">确认支付界面</h1>
         </div>
         <div class="center">
-            <img class="good-img" src="../assets/images/pay-img.png" alt="">
-            <div class="pay-context">
-                <div class="name text">商品名称：华为mate30pro</div>
-                <div class="number text">数量：1</div>
-                <div class="price text">单价：200￥</div>
-                <div class="phone text">联系电话：17816610888</div>
-            </div>
+            <ul>
+                <li v-for="item in items.orderitems" :key="item.id">
+                    <img class="good-img" :src=item.book.bookPoster alt="">
+                    <span class="pay-context">
+                        <div class="name text">商品名称：{{item.book.bookName}}</div>
+                        <div class="number text">数量：{{item.quantity}}</div>
+                        <div class="price text">原价：￥{{item.book.bookPrice * item.quantity}}</div>
+                        <div class="phone text">实付：￥{{item.book.bookPrice * item.quantity * item.book.bookDiscount}}</div>
+                    </span>
+                </li>
+            </ul>
         </div>
+        <div class="pay-text">总计：￥{{totalPrice}} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 优惠：￥{{totalDiscount}}</div>
         <div class="pay-text">请选择支持方式</div>
 
         <div class="pay-way">
-            <div class="pay1 pay-img"><img src="../assets/images/pay1.png" alt=""></div>
+            <div class="pay1 pay-img" @click=pay><img src="../assets/images/pay1.png" alt=""></div>
             <div class="pay2 pay-img"><img src="../assets/images/pay2.png" alt=""></div>
             <div class="pay3 pay-img"><img src="../assets/images/pay3.png" alt=""></div>
             <div class="pay4 pay-img"><img src="../assets/images/pay4.png" alt=""></div>
             <div class="pay5 pay-img"><img src="../assets/images/pay5.png" alt=""></div>
             <div class="pay6 pay-img"><img src="../assets/images/pay6.png" alt=""></div>
         </div>
+
     </div>
     <Footer></Footer>
 </template>
@@ -30,14 +36,44 @@
 <script>
 import Header from "./header"
 import Footer from "./footer"
+import axios from 'axios'
 export default {
     components:{
         Header,
         Footer
     },
-    
+    data: function() {
+        return {
+            items : {},
+            totalPrice : 0,
+            totalDiscount : 0,
+            title : "确认支付",
+            show : true
+        }
+    },
+    methods : {
+        get() {
+            axios.get("http://www.molycao.cn:8088/getlatestuorder?userid=1").then(res => {
+                if (res.status == 200) {
+                    this.items = res.data.extend
+                    this.getTotalPrice()
+                }
+            })
+        },
+        getTotalPrice() {
+            this.items.orderitems.forEach((item) => {
+                this.totalPrice += item.book.bookPrice * item.quantity * item.book.bookDiscount
+                this.totalDiscount += item.book.bookPrice * item.quantity * (1 - item.book.bookDiscount)
+            })
+            this.totalPrice = Math.round(this.totalPrice)
+            this.totalDiscount = Math.round(this.totalDiscount)
+        },
+        pay() {
+
+        }
+    },
     mounted() {
-        
+        this.get()
     }
 }
 </script>
@@ -66,6 +102,9 @@ export default {
     justify-content: center;
 }
 
+.center ul li {
+    display: flex;
+}
 .good-img{
     margin-top: 40px;
     width: 200px;

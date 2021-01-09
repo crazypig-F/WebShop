@@ -138,14 +138,42 @@ export default {
           }
       },
       deleteItem(item) {
-          var index = this.items.indexOf(item)
-          if (index != -1) {
-              this.items.splice(index, 1)
-          }
+          var params = new URLSearchParams();
+          var id = []
+          id.push(item.cartid)
+          params.append("cartIds", id)
+          axios.post("http://www.molycao.cn:8088/deletecarts", params).then(res => {
+              if (res.status != 200) {
+                  alert("删除失败，请刷新页面")
+              } else {
+                  var index = this.items.indexOf(item)
+                  if (index != -1) {
+                      this.items.splice(index, 1)
+                  }
+                  alert("删除成功")
+              }
+          })
       },
       deleteSelectItems() {
+          var params = new URLSearchParams();
+          var ids = []
           this.selectItems.forEach((item) => {
-              this.deleteItem(item)
+              ids.push(item.cartid)
+          })
+          console.log(ids)
+          params.append("cartIds", ids)
+          axios.post("http://www.molycao.cn:8088/deletecarts", params).then(res => {
+              if (res.status != 200) {
+                  alert("删除失败，请刷新页面")
+              } else {
+                  this.selectItems.forEach((item) => {
+                      var index = this.items.indexOf(item)
+                      if (index != -1) {
+                          this.items.splice(index, 1)
+                      }
+                  })
+                  alert("删除成功")
+              }
           })
       },
       get() {
@@ -163,13 +191,16 @@ export default {
               params.append("userId", 1);
               params.append("vipId", 2);
               var payItems = []
+              var ids = []
               this.selectItems.forEach((item) => {
                   let temp = {}
                   temp["bookName"] = item.book.bookName
                   temp["booksalequantify"] = item.goodsnum
                   payItems.push(temp)
+                  ids.push(item.cartid)
               })
               params.append("orderitems", JSON.stringify(payItems))
+              params.append("cartIds", ids)
               axios.post("http://www.molycao.cn:8088/order",params).then (res => {
                   if (res.status == 200) {
                       this.$router.push({path : '/paycheck'})
