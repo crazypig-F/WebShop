@@ -84,6 +84,7 @@
         </div>
         <div v-if="login" class="reg_c">
           <router-link to="/personal" tag="a">{{username}}</router-link>
+          <a href="javascript:void(0);" class="logout" @click="logout">退出</a>
         </div>
       </div>
     </div>
@@ -107,6 +108,11 @@ export default {
     select(item) {
       this.set_select_category(item);
       this.$router.replace({ path: `/all`});
+    },
+    logout(){
+      localStorage.removeItem('login');
+      localStorage.removeItem('username');
+      this.$router.push({ path: `/login` });
     },
     ...mapMutations(["set_select_category"]),
   },
@@ -364,5 +370,11 @@ a {
 }
 .header .header_c .reg .ico:hover .settle {
   display: block;
+}
+.logout{
+  height: 20px;
+  width: 40px;
+  margin-left: 5px;
+  text-align: center;
 }
 </style>

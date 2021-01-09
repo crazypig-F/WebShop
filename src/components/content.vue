@@ -4,7 +4,7 @@
     <div class="qingzhu_content_c inner_c">
       <div class="pro1">
         <div class="title">
-          <h2><a href="#">新品推荐，精心挑选</a></h2>
+          <h2><a href="javascript:void(0);">新品推荐，精心挑选</a></h2>
           <p class="info">家居必备使用小单品</p>
         </div>
         <div class="pro_pic">
@@ -27,13 +27,13 @@
       </div>
       <div class="pro2">
         <div class="title">
-          <h2><a href="#">专题活动，限时促销</a></h2>
+          <h2><a href="javascript:void(0);">专题活动，限时促销</a></h2>
           <p class="info">严选材质，用心设计</p>
         </div>
         <div class="pro2_c">
           <ul class="pro2_c_pic">
             <li :class="item.class" v-for="item in activities" :key="item.id">
-              <a href="#">
+              <a href="javascript:void(0);">
                 <img :src="item.path" alt="" />
               </a>
               <span></span>
@@ -43,7 +43,7 @@
       </div>
       <div class="pro3">
         <div class="title">
-          <h2><a href="#">青竹良品，你的家居首选</a></h2>
+          <h2><a href="javascript:void(0);">青竹良品，你的家居首选</a></h2>
           <p class="info">天然之源，诚挚之礼</p>
         </div>
         <div class="pro3_c">
@@ -71,7 +71,7 @@
           </ul>
           <ul class="pub_pro">
             <li>
-              <a href="#">
+              <a href="javascript:void(0);">
                 <img src="../assets/images/img45.jpg" alt="" />
               </a>
               <div class="mask"></div>
@@ -95,7 +95,7 @@
       </div>
       <div class="pro4">
         <div class="title">
-          <h2><a href="#">全球大牌优选，买手用心挑选</a></h2>
+          <h2><a href="javascript:void(0);">全球大牌优选，买手用心挑选</a></h2>
           <p class="info">全球好货，原装正品</p>
         </div>
         <div class="por4_top">
@@ -218,7 +218,7 @@ export default {
       });
     },
     get_perfect_goods() {
-      for (let index = 4; index < this.goods.length; index += 2) {
+      for (let index = 4; index < 8; index += 1) {
         const element = this.goods[index];
         this.perfect_goods.push(element);
       }

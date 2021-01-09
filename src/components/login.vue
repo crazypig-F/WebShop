@@ -59,6 +59,7 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             if (res.data.code == 100) {
+              console.log(res.data);
               localStorage.setItem("login", true)
               localStorage.setItem("username", this.$refs.username.value)
               this.$router.push({ path: `/index` });
