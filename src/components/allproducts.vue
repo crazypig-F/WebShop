@@ -134,10 +134,8 @@ export default {
         });
     },
     show_detail(item) {
-      this.set_select_goods(item);
-      this.$router.push({ path: `/detail` });
+      this.$router.push({ path: `/detail/` + item.bookId});
     },
-    ...mapMutations(["set_select_goods"]),
   },
   created() {
     this.get_goods();

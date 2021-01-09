@@ -54,8 +54,6 @@ export default {
     }
   },
   created(){
-  //   this.goods = this.select_goods
-  //   console.log(this.goods);
     if (null != this.$route.params.itemId) {
       this.id = this.$route.params.itemId
     }
@@ -74,10 +72,15 @@ export default {
     },
     addToCart() {
       var params = new URLSearchParams();
-      params.append("userId", item.cartid);
-      params.append("goodsId", item.goodsnum);
+      params.append("userId", 1);
+      params.append("goodsId", this.id)
+      params.append("goodsNum", this.number);
       axios.post("http://www.molycao.cn:8088/putcart",params).then (res => {
-        
+        if (res.status != 200) {
+          alert("加入购物车失败")
+        } else {
+          alert("购物车添加成功")
+        }
       })
     },
     get() {
@@ -91,12 +94,7 @@ export default {
   components: {
     Header,
     Footer,
-  },
-  // computed: {
-  //   ...mapState([
-  //     "select_goods"
-  //   ]),
-  // }
+  }
 };
 </script>
 <style scoped>
