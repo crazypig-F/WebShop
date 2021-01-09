@@ -55,7 +55,7 @@
                 <span>￥{{ item.bookPrice }}</span>
               </div>
               <div class="mask">
-                <a href="#" class="btn">查看详情</a>
+                <a @click=show_detail(item) class="btn">查看详情</a>
               </div>
             </li>
           </ul>
@@ -76,6 +76,7 @@
 import Header from "./header";
 import Footer from "./footer";
 import axios from "axios";
+import { mapMutations, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -100,6 +101,46 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  computed: {
+    ...mapState(["select_category"]),
+  },
+  methods: {
+    get_goods() {
+      console.log(this.select_category);
+      if (this.select_category == "") {
+        axios.get("http://www.molycao.cn:8088/books").then((res) => {
+          this.goods = res.data.extend.books;
+        });
+      } else {
+        axios
+          .get(
+            "http://www.molycao.cn:8088/bookswithcategory?category=" +
+              this.select_category
+          )
+          .then((res) => {
+            this.goods = res.data.extend.books;
+          });
+      }
+    },
+    select(item) {
+      axios
+        .get(
+          "http://www.molycao.cn:8088/bookswithcategory?category=" +
+            item
+        )
+        .then((res) => {
+          this.goods = res.data.extend.books;
+        });
+    },
+    show_detail(item){
+      this.set_select_goods(item)
+      this.$router.push({ path: `/detail` });
+    },
+    ...mapMutations(["set_select_goods"])
+  },
+  created() {
+    this.get_goods();
   },
 };
 </script>
@@ -303,5 +344,8 @@ a {
 .s_content .s_content_c .s_info .pages .tol:hover {
   background: #9dafb8;
   color: #fff;
+}
+.cont{
+  text-align: center;
 }
 </style>

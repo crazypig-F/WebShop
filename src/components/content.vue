@@ -10,14 +10,12 @@
         <div class="pro_pic">
           <div class="pro_c">
             <ul>
-              <li v-for="item in goods" :key="item.id">
-                <router-link to="/detail" tag="a">
-                  <img :src="item.bookPoster" alt="" />
-                  <div class="cont">
-                    <h3>{{ item.bookName }}</h3>
-                    <span>￥{{ item.bookPrice }}</span>
-                  </div>
-                </router-link>
+              <li v-for="item in goods" :key="item.id" @click="select(item)">
+                <img :src="item.bookPoster" alt="" />
+                <div class="cont">
+                  <h3>{{ item.bookName }}</h3>
+                  <span>￥{{ item.bookPrice }}</span>
+                </div>
               </li>
             </ul>
           </div>
@@ -178,105 +176,11 @@
 
 <script>
 import axios from "axios";
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      goods: [
-        {
-          bookId: 15,
-          bookName: "不锈钢时尚咖啡水壶",
-          categoryId: 0,
-          bookCategory: {
-            categoryId: 0,
-            categoryName: "不锈钢",
-            parentId: 0,
-          },
-          bookStandard: null,
-          bookAuthor: null,
-          bookSupplierId: 1,
-          supplier: {
-            supplierId: 1,
-            supplierName: "阿里巴巴",
-            supplierPrivy: "马云",
-            supplierAddress: "杭州",
-            supplirePhone: "123456",
-          },
-          bookPrice: 300.0,
-          bookDiscount: 1.0,
-          bookPoster:
-            "http://asset.ibanquan.com/image/5880851f3f8f90098800003d/s_w330h330.png?v=1484817695",
-        },
-        {
-          bookId: 16,
-          bookName: "经典系列红色时钟",
-          categoryId: 2,
-          bookCategory: {
-            categoryId: 2,
-            categoryName: "塑料",
-            parentId: 0,
-          },
-          bookStandard: null,
-          bookAuthor: null,
-          bookSupplierId: 2,
-          supplier: {
-            supplierId: 2,
-            supplierName: "当当",
-            supplierPrivy: "李国庆",
-            supplierAddress: "北京",
-            supplirePhone: "542225",
-          },
-          bookPrice: 580.0,
-          bookDiscount: 1.0,
-          bookPoster:
-            "http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_w330h330.png?v=1484817638",
-        },
-        {
-          bookId: 17,
-          bookName: "简约原木餐盘",
-          categoryId: 3,
-          bookCategory: {
-            categoryId: 3,
-            categoryName: "木制",
-            parentId: 0,
-          },
-          bookStandard: "",
-          bookAuthor: "",
-          bookSupplierId: 1,
-          supplier: {
-            supplierId: 1,
-            supplierName: "阿里巴巴",
-            supplierPrivy: "马云",
-            supplierAddress: "杭州",
-            supplirePhone: "123456",
-          },
-          bookPrice: 100.0,
-          bookDiscount: 1.0,
-          bookPoster: "http://bookpicture.molycao.cn/1609761036572.png",
-        },
-        {
-          bookId: 17,
-          bookName: "简约原木餐盘",
-          categoryId: 3,
-          bookCategory: {
-            categoryId: 3,
-            categoryName: "木制",
-            parentId: 0,
-          },
-          bookStandard: "",
-          bookAuthor: "",
-          bookSupplierId: 1,
-          supplier: {
-            supplierId: 1,
-            supplierName: "阿里巴巴",
-            supplierPrivy: "马云",
-            supplierAddress: "杭州",
-            supplirePhone: "123456",
-          },
-          bookPrice: 100.0,
-          bookDiscount: 1.0,
-          bookPoster: "http://bookpicture.molycao.cn/1609761036572.png",
-        },
-      ],
+      goods: [],
       activities: [
         {
           class: "pic1 pic",
@@ -294,11 +198,23 @@ export default {
     };
   },
   methods: {
-    test() {
-      axios.get("http://www.molycao.cn:8088/customers").then(res=>{
-        console.log(res)
-      })
+    select(item) {
+      this.set_select_goods(item);
+      this.$router.push({ path: `/detail` });
     },
+    get_goods() {
+      let that = this;
+      axios.get("http://www.molycao.cn:8088/books").then((res) => {
+        that.goods = res.data.extend.books;
+      });
+    },
+    ...mapMutations(["set_select_goods"]),
+  },
+  computed: {
+    ...mapState(["select_goods"]),
+  },
+  created() {
+    this.get_goods()
   },
 };
 </script>
