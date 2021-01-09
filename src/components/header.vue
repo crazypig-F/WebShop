@@ -67,15 +67,16 @@
       </ul>
       <!-- <a href="#" class="search"></a> -->
       <div class="reg">
+
         <div class="ico">
           <span class="ico_c"></span>
           <div class="settle">
-            <p class="con">{{ totalcount }}件商品 共计：<span>￥0</span></p>
+            <p class="con">{{ totalcount }}件商品 共计：<span>￥{{totalprice}}</span></p>
             <router-link to="/cart" tag="a"
               ><a href="#" class="btn">去看看</a></router-link
             >
           </div>
-          <span class="con"> 0 </span>
+          <span class="con"> {{totalcount}} </span>
         </div>
         <div v-if="!login" class="reg_c">
           <router-link to="/login" tag="a">登录</router-link>
@@ -93,7 +94,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import axios from 'axios'
 export default {
   data: function () {
     return {
@@ -104,20 +105,33 @@ export default {
       category: ["不锈钢", "原料水泥", "塑料", "木质"],
     };
   },
-  methods: {
-    select(item) {
-      this.set_select_category(item);
-      this.$router.replace({ path: `/all`});
+  methods:{
+    getCart() {
+      axios.get("http://www.molycao.cn:8088/querycart?userId=1").then(res => {
+        if (res.request.status == 200) {
+            this.cartItems = res.data.extend.carts
+            this.setCart()
+        }
+      })
     },
+<<<<<<< HEAD
     logout(){
       localStorage.removeItem('login');
       localStorage.removeItem('username');
       this.$router.push({ path: `/login` });
     },
     ...mapMutations(["set_select_category"]),
+=======
+    setCart() {
+      this.cartItems.forEach((item) => {
+        this.totalcount++
+        this.totalprice += item.book.bookPrice*item.goodsnum
+      })
+    }
+>>>>>>> origin/release/20201127
   },
-  computed: {
-    ...mapState(["select_category"]),
+  mounted() {
+    this.getCart()
   },
   created() {
     this.login = localStorage.getItem("login")

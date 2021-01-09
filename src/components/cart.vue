@@ -30,19 +30,10 @@
                         </li>
                     </ul>
                 </div>
-                <div class="inter23">
-                    <div class="picture">
-                        <img src="images/购物车.png" alt="">
-                    </div>
-                    <p>您的购物车还没有商品，快去挑选心爱的商品吧！</p>
-                    <a href=""><span>去逛逛</span></a>
-                </div>
             </div>
             <div class="inter3">
                 <div class="inter31">
-                    <div class="last">
-                        <router-link to='/paycheck' tag="a">确认结算</router-link>
-                    </div>
+                    <div class="last" @click=toCharge tag="a"> 确认结算</div>
                     <input type="checkbox" class="checkAll" :checked = isAllChecked @click="checkall"><span class="s1">全选</span>
                     <span class="ss1" @click=deleteSelectItems>删除</span>
                     <div class="foot">
@@ -77,26 +68,43 @@ export default {
   },
   methods : {
       add (item) {
-          item.goodsnum ++;
-          if (item.isChecked) {
+          item.goodsnum ++
+          if (item.ischeck == 1) {
               this.totalprice += item.book.bookPrice
           }
+          this.changeItemCount(item)
       },
       sub (item) {
           if (item.goodsnum > 1) {
-              item.goodsnum--;
-              if (item.isChecked) {
-              this.totalprice -= item.book.bookPrice
-          }
+              item.goodsnum --;
+              if (item.ischeck == 1) {
+                this.totalprice -= item.book.bookPrice
+              }
+            this.changeItemCount(item)
           }
       },
+      changeItemCount (item) {
+          var params = new URLSearchParams();
+          params.append("cartId", item.cartid);
+          params.append("goodsNum", item.goodsnum);
+          console.log(params)
+          axios.post("http://www.molycao.cn:8088/changenumber",params).then (res => {
+              if (res.status == 200) {
+                  alert("数量编辑成功")
+              } else {
+                  alert("数量编辑失败")
+              }
+          })
+      },
       check(item) {
-          console.log(item.ischeck)
           if (item.ischeck == 0) {
               item.ischeck = 1
               this.totalcount++
               this.totalprice += item.book.bookPrice * item.goodsnum
               this.selectItems.push(item)
+              if (this.selectItems.length == this.items.length) {
+                  this.isAllChecked = true
+              }
           } else {
               item.ischeck = 0
               this.totalcount--
@@ -105,6 +113,7 @@ export default {
               if (index != -1) {
                   this.selectItems.splice(index, 1)
               }
+              this.isAllChecked = false
           }
       },
       checkall() {
@@ -143,9 +152,32 @@ export default {
           axios.get("http://www.molycao.cn:8088/querycart?userId=1").then(res => {
               if (res.request.status == 200) {
                   this.items = res.data.extend.carts
-                  console.log(this.items)
               }
           })
+      },
+      toCharge() {
+          if (this.selectItems.length <= 0) {
+              alert("您还没有选择商品")
+          } else {
+              var params = new URLSearchParams();
+              params.append("userId", 1);
+              params.append("vipId", 2);
+              var payItems = []
+              this.selectItems.forEach((item) => {
+                  let temp = {}
+                  temp["bookName"] = item.book.bookName
+                  temp["booksalequantify"] = item.goodsnum
+                  payItems.push(temp)
+              })
+              params.append("orderitems", JSON.stringify(payItems))
+              axios.post("http://www.molycao.cn:8088/order",params).then (res => {
+                  if (res.status == 200) {
+                      this.$router.push({path : '/paycheck'})
+                  } else {
+                      alert("结算请求出错，请稍后再试。")
+                  }
+              })
+          }
       }
   },
   mounted() {
@@ -306,6 +338,7 @@ img {
 .outer9 .inter3 .last{
     float: right;
     background-color: #FF5151;
+    color: #ffffff;
     width: 194px;
     height: 48px;
     line-height: 48px;
@@ -320,41 +353,6 @@ img {
 .outer9 .inter3 .checkAll{
     width: 16px;
     height: 16px;
-}
-
-.outer9 .inter23{
-    width: 1118px;
-    height: 524px;
-    border: 0.5px solid #cccccc;
-    text-align: center;
-    display: none;
-}
-.outer9 .inter23 .picture{
-    width: 1118px;
-    height: 250px;
-    /*background-color: yellow;*/
-    text-align: center;
-}
-.outer9 .inter23 .picture img{
-    width: 150px;
-    height: 120px;
-    margin: 110px;
-}
-.outer9 .inter23 p{
-    color: #999;
-    padding-bottom: 20px;
-    font-size: 16px;
-}
-.outer9 .inter23 a{
-    background: #c78a49;
-    padding: 0 20px;
-    height: 26px;
-    line-height: 24px;
-    margin: 0 auto;
-}
-.outer9 .inter23 span{
-    font-size: 12px;
-    color: #ffffff;text-align: center;
 }
 
 </style>

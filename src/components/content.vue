@@ -206,8 +206,8 @@ export default {
   },
   methods: {
     select(item) {
-      this.set_select_goods(item);
-      this.$router.push({ path: `/detail` });
+      // this.set_select_goods(item);
+      this.$router.push({ path: `/detail/`+ item.bookId});
     },
     get_goods() {
       let that = this;

@@ -31,7 +31,7 @@
           </div>
 
           件（库存<span>2344</span>件）
-          <a href="购物车.html" class="car">加入购物车</a>
+          <a class="car" @click=addToCart>加入购物车</a>
         </div>
       </div>
     </div>
@@ -43,16 +43,23 @@
 import Header from "./header";
 import Footer from "./footer"; 
 import { mapState } from "vuex";
+import axios from 'axios';
 export default {
   data(){
     return{
       goods: {},
-      number: 1
+      number: 1,
+      id: "",
+      picUrl: ""
     }
   },
   created(){
-    this.goods = this.select_goods
-    console.log(this.goods);
+  //   this.goods = this.select_goods
+  //   console.log(this.goods);
+    if (null != this.$route.params.itemId) {
+      this.id = this.$route.params.itemId
+    }
+    this.get()
   },
   methods: {
     add(){
@@ -64,17 +71,32 @@ export default {
       if(this.number > 1){
         this.number -= 1
       }
+    },
+    addToCart() {
+      var params = new URLSearchParams();
+      params.append("userId", item.cartid);
+      params.append("goodsId", item.goodsnum);
+      axios.post("http://www.molycao.cn:8088/putcart",params).then (res => {
+        
+      })
+    },
+    get() {
+      axios.get("http://www.molycao.cn:8088/getBookwithid?bookId=" + this.id).then (res => {
+        if (res.status == 200) {
+          this.goods = res.data.extend.book
+        }
+      })
     }
   },
   components: {
     Header,
     Footer,
   },
-  computed: {
-    ...mapState([
-      "select_goods"
-    ])
-  },
+  // computed: {
+  //   ...mapState([
+  //     "select_goods"
+  //   ]),
+  // }
 };
 </script>
 <style scoped>
