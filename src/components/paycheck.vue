@@ -59,12 +59,21 @@ export default {
             totalPrice : 0,
             totalDiscount : 0,
             zhifubao: false,
-            weixing: false
+            weixing: false,
+            queryId: -1
         }
     },
     methods : {
         get() {
             axios.get("http://www.molycao.cn:8088/getlatestuorder?userid=1").then(res => {
+                if (res.status == 200) {
+                    this.items = res.data.extend
+                    this.getTotalPrice()
+                }
+            })
+        },
+        getOther() {
+            axios.get("http://www.molycao.cn:8088/getuorder?uorderid=" + this.queryId).then(res => {
                 if (res.status == 200) {
                     this.items = res.data.extend
                     this.getTotalPrice()
@@ -116,7 +125,14 @@ export default {
         }
     },
     mounted() {
-        this.get()
+        if (null != this.$route.params.orderId) {
+            this.queryId = this.$route.params.orderId
+        }
+        if (this.queryId == -1) {
+            this.get()
+        } else {
+            this.getOther()
+        }
     }
 }
 </script>

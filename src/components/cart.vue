@@ -204,7 +204,7 @@ export default {
               params.append("cartIds", ids)
               axios.post("http://www.molycao.cn:8088/order",params).then (res => {
                   if (res.status == 200) {
-                      this.$router.push({path : '/paycheck'})
+                      this.$router.push({path : '/paycheck/' + '-1'})
                   } else {
                       alert("结算请求出错，请稍后再试。")
                   }

@@ -324,7 +324,7 @@ a {
 
 .pay_list {
   height: 100px;
-  width: 920px;
+  width: 890px;
   background-color: rgb(253, 253, 253);
   margin-top: 20px;
   border-radius: 10px;
@@ -332,7 +332,7 @@ a {
 .info {
   height: 100px;
   margin-top: 40px;
-  color: rgb(253, 34, 34);
+  color: #26411d;
   font-size: 30px;
 }
 .span_all {
@@ -349,6 +349,6 @@ a {
   width: 200px;
   height: 40px;
   margin-top: 35px;
-  color: #f13f39;
+  color: #385031;
 }
 </style>

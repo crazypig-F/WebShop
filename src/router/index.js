@@ -43,7 +43,7 @@ const routes = [
     component: Detail
   },
   {
-    path: '/paycheck',
+    path: '/paycheck/:orderId',
     component: Paycheck
   },
   {
