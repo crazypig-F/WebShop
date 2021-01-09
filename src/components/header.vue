@@ -85,6 +85,7 @@
         </div>
         <div v-if="login" class="reg_c">
           <router-link to="/personal" tag="a">{{username}}</router-link>
+          <a href="javascript:void(0);" class="logout" @click="logout">退出</a>
         </div>
       </div>
     </div>
@@ -113,12 +114,20 @@ export default {
         }
       })
     },
+    logout(){
+      localStorage.removeItem('login');
+      localStorage.removeItem('username');
+      localStorage.removeItem('userid');
+      this.$router.push({ path: `/login` });
+    },
+
     setCart() {
       this.cartItems.forEach((item) => {
         this.totalcount++
         this.totalprice += item.book.bookPrice*item.goodsnum
       })
     }
+
   },
   mounted() {
     this.getCart()
@@ -374,5 +383,11 @@ a {
 }
 .header .header_c .reg .ico:hover .settle {
   display: block;
+}
+.logout{
+  height: 20px;
+  width: 40px;
+  margin-left: 5px;
+  text-align: center;
 }
 </style>

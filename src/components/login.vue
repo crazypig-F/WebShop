@@ -61,6 +61,7 @@ export default {
             if (res.data.code == 100) {
               localStorage.setItem("login", true)
               localStorage.setItem("username", this.$refs.username.value)
+              localStorage.setItem("userid", res.data.extend.userid)
               this.$router.push({ path: `/index` });
             } else {
               alert("用户名密码错误");
