@@ -38,15 +38,11 @@
         </div>
         <div class="pro2_c">
           <ul class="pro2_c_pic">
-            <li
-              :class="item.class"
-              v-for="item in activities"
-              :key="item.id"
-            >
+            <li :class="item.class" v-for="item in activities" :key="item.id">
               <a href="javascript:void(0);">
                 <img :src="item.path" alt="" />
               </a>
-              <span></span>
+              <span @click="select_activity(item)"></span>
             </li>
           </ul>
         </div>
@@ -200,17 +196,17 @@ export default {
       recomend_page: 0,
       activities: [
         {
-          name: "activity1",
+          name: "德国不锈钢厨具",
           class: "pic1 pic",
           path: require("../assets/images/img31.jpg"),
         },
         {
-          name: "activity2",
+          name: "德国不锈钢厨具",
           class: "pic2 pic",
           path: require("../assets/images/img32.jpg"),
         },
         {
-          name: "activity3",
+          name: "德国不锈钢厨具",
           class: "pic3 pic",
           path: require("../assets/images/img33.jpg"),
         },
@@ -219,7 +215,6 @@ export default {
   },
   methods: {
     select(item) {
-      // this.set_select_goods(item);
       this.$router.push({ path: `/detail/` + item.bookId });
     },
     get_goods() {
@@ -255,6 +250,9 @@ export default {
         this.recomend_page += 1;
         this.get_recomend_goods();
       }
+    },
+    select_activity(item) {
+      this.$router.push({ path: `/all/` + item.name });
     },
   },
   created() {
