@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     select_goods: {},
-    select_category: ""
+    select_category: "",
   },
   mutations: {
     set_select_goods(state, goods){
@@ -11,7 +11,7 @@ export default createStore({
     },
     set_select_category(state, category){
       state.select_category = category
-    }
+    },
   },
   actions: {
   },

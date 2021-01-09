@@ -59,14 +59,16 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             if (res.data.code == 100) {
+              localStorage.setItem("login", true)
+              localStorage.setItem("username", this.$refs.username.value)
               this.$router.push({ path: `/index` });
-            }else{
-				alert("用户名密码错误")
-			}
+            } else {
+              alert("用户名密码错误");
+            }
           }
         });
     },
-  },
+  }
 };
 </script>
 <style scoped>

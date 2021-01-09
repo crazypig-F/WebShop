@@ -77,10 +77,13 @@
           </div>
           <span class="con"> 0 </span>
         </div>
-        <div class="reg_c">
+        <div v-if="!login" class="reg_c">
           <router-link to="/login" tag="a">登录</router-link>
           <span>&nbsp;|&nbsp;</span>
           <router-link to="/register" tag="a">注册</router-link>
+        </div>
+        <div v-if="login" class="reg_c">
+          <router-link to="/personal" tag="a">{{username}}</router-link>
         </div>
       </div>
     </div>
@@ -95,53 +98,8 @@ export default {
     return {
       totalprice: 0,
       totalcount: 0,
-      items: [
-        {
-          id: 1,
-          pic:
-            "http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_140x140.png?v=1484817638",
-          title: "经典系列计算机",
-          price: 200,
-          count: 1,
-          isChecked: false,
-        },
-        {
-          id: 2,
-          pic:
-            "http://asset.ibanquan.com/image/5880828b9bedc407dc000014/s_140x140.png?v=1484817035",
-          title: "黑陶自然花香蜡烛",
-          price: 123,
-          count: 3,
-          isChecked: false,
-        },
-        {
-          id: 3,
-          pic:
-            "http://asset.ibanquan.com/image/588082c50dd76c1c9700001b/s_140x140.png?v=1484817093",
-          title: "便携简约清扫扫帚",
-          price: 312,
-          count: 2,
-          isChecked: false,
-        },
-        {
-          id: 4,
-          pic:
-            "http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
-          title: "简约木制餐盘",
-          price: 300,
-          count: 1,
-          isChecked: false,
-        },
-        {
-          id: 4,
-          pic:
-            "http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
-          title: "简约木制餐盘",
-          price: 300,
-          count: 1,
-          isChecked: false,
-        },
-      ],
+      login: false,
+      username: "",
       category: ["不锈钢", "原料水泥", "塑料", "木质"],
     };
   },
@@ -154,6 +112,10 @@ export default {
   },
   computed: {
     ...mapState(["select_category"]),
+  },
+  created() {
+    this.login = localStorage.getItem("login")
+    this.username = localStorage.getItem("username")
   }
 };
 </script>
