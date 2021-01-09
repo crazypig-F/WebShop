@@ -74,7 +74,7 @@
           <div class="box2">
             <div class="pay">
               <img class="box2-img" src="../assets/images/pay.png" />
-              <a href="" class="box2-a">
+              <a href="javascript:void(0);" @click="get_pay()" class="box2-a">
                 <div class="box2-text">待支付</div>
               </a>
             </div>
@@ -93,7 +93,21 @@
           </div>
         </div>
         <div class="line2">
-          
+          <ul>
+            <li v-for="item in items" :key="item.id" class="pay_list">
+              <div class="span_all">
+                <span class="span_info">订单编号: {{ item.orderId }}</span>
+                <span class="span_info">订单日期: {{ item.orderDate }}</span>
+                <span class="span_info">价格: {{ item.totalPrice }}</span>
+                <a href="javascript:void(0);" class="more">点击查看详情</a>
+              </div>
+            </li>
+          </ul>
+          <div class="info">
+            <a v-if="show" href="javascript:void(0);"
+              >获取更多信息，请前往我的订单界面</a
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -103,16 +117,35 @@
 <script>
 import Header from "./header";
 import Footer from "./footer";
+import axios from "axios";
 export default {
   components: {
     Header,
     Footer,
   },
-  data: function() {
-      return {
-          userName: "",
-          order : [],
-      }
+  data: function () {
+    return {
+      userName: "",
+      order: [],
+      items: [],
+      show: false,
+    };
+  },
+  methods: {
+    get_pay() {
+      let id = localStorage.getItem("userid");
+      axios
+        .get("http://www.molycao.cn:8088/queryuorder?userId=" + id)
+        .then((res) => {
+          let item = [];
+          for (let index = 0; index < 3; index++) {
+            const element = res.data.extend.uorders[index];
+            item.push(element);
+          }
+          this.items = item;
+          this.show = true;
+        });
+    },
   },
   mounted() {
     this.userName = localStorage.getItem("username")
@@ -122,41 +155,40 @@ export default {
 <style scoped>
 /* 公共类，设置页面的版心 */
 
-.inner_c{
-	/* 版心的宽度 */
-	width: 1140px;
-	/* 居中显示 */
-	margin: 0 auto;
+.inner_c {
+  /* 版心的宽度 */
+  width: 1140px;
+  /* 居中显示 */
+  margin: 0 auto;
 }
 /* 设置a标签的下划线 */
-a{
-	text-decoration: none;
-	color: inherit;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 /* 设置遮罩，公共类 */
-.mask{
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: rgba(0,0,0,.2);
-	display: none;
+.mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  display: none;
 }
-.mask .btn{
-	width: 138px;
-	height: 52px;
-	position: absolute;
-	background: #C78A49;
-	color: #fff;
-	text-align: center;
-	line-height: 52px;
-	border-radius: 3px;
-	top: 50%;
-	left: 50%;
-	margin-top: -26px;
-	margin-left: -69px;
-
+.mask .btn {
+  width: 138px;
+  height: 52px;
+  position: absolute;
+  background: #c78a49;
+  color: #fff;
+  text-align: center;
+  line-height: 52px;
+  border-radius: 3px;
+  top: 50%;
+  left: 50%;
+  margin-top: -26px;
+  margin-left: -69px;
 }
 .s_content {
   width: 100%;
@@ -284,7 +316,39 @@ a{
   text-align: center;
   margin-top: 5px;
 }
-.line2-img {
+.line2 {
   margin-top: 40px;
+  height: 500px;
+  width: 900px;
+}
+
+.pay_list {
+  height: 100px;
+  width: 920px;
+  background-color: rgb(253, 253, 253);
+  margin-top: 20px;
+  border-radius: 10px;
+}
+.info {
+  height: 100px;
+  margin-top: 40px;
+  color: rgb(253, 34, 34);
+  font-size: 30px;
+}
+.span_all {
+  display: flex;
+  justify-content: center;
+  align-items:center
+}
+.span_info{
+  width: 200px;
+  height: 40px;
+  margin-top: 35px;
+}
+.more{
+  width: 200px;
+  height: 40px;
+  margin-top: 35px;
+  color: #f13f39;
 }
 </style>

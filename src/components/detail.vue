@@ -3,8 +3,8 @@
   <div class="outer10">
     <div class="inter1">
       <div class="inter11">
-        <a href="a青竹总界面.html">首页</a> > <a href="">所有商品</a> >
-        <span>{{goods.bookName}}</span>
+        <router-link to="/index" tag="a">首页</router-link> > <a href="javascript:void(0);">所有商品</a> >
+        <a href="javascript:void(0);">{{goods.bookName}}</a>
       </div>
     </div>
     <div class="inter2">
