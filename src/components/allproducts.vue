@@ -7,6 +7,8 @@
           <a href="#"> 首页 </a>
           &gt;
           <span> 所有商品 </span>
+          &gt;
+          <span> {{select_category}} </span>
         </div>
         <div class="screen">
           <table>
@@ -22,9 +24,10 @@
               <th>类别</th>
               <td>
                 <a
+                  href="javascript:void(0);"
                   v-for="item in category"
                   :key="item.id"
-                  @click="get_good_with_category(item)"
+                  @click="select(item)"
                   >{{ item }}</a
                 >
               </td>
@@ -44,7 +47,10 @@
               <i></i>
             </a>
           </div>
-          <div class="total">共<span>20</span>个商品</div>
+          <div class="total">
+            共<span>{{ total_num }}</span
+            >个商品
+          </div>
         </div>
         <div class="s_prod">
           <ul class="pub_pro">
@@ -55,7 +61,7 @@
                 <span>￥{{ item.bookPrice }}</span>
               </div>
               <div class="mask">
-                <a @click=show_detail(item) class="btn">查看详情</a>
+                <a @click="show_detail(item)" class="btn">查看详情</a>
               </div>
             </li>
           </ul>
@@ -81,17 +87,10 @@ export default {
   data() {
     return {
       goods: [],
+      total_num: 0,
       category: ["不锈钢", "原料水泥", "塑料", "木质"],
+      select_category: "",
     };
-  },
-  methods: {
-    get_good_with_category(name) {
-      axios
-        .get("http://www.molycao.cn:8088/bookswithcategory?category=" + name)
-        .then((res) => {
-          this.goods = res.data.extend.books;
-        });
-    },
   },
   mounted() {
     axios.get("http://www.molycao.cn:8088/books").then((res) => {
@@ -111,6 +110,7 @@ export default {
       if (this.select_category == "") {
         axios.get("http://www.molycao.cn:8088/books").then((res) => {
           this.goods = res.data.extend.books;
+          this.total_num = this.goods.length;
         });
       } else {
         axios
@@ -120,24 +120,24 @@ export default {
           )
           .then((res) => {
             this.goods = res.data.extend.books;
+            this.total_num = this.goods.length;
           });
       }
     },
     select(item) {
+      this.select_category = item
       axios
-        .get(
-          "http://www.molycao.cn:8088/bookswithcategory?category=" +
-            item
-        )
+        .get("http://www.molycao.cn:8088/bookswithcategory?category=" + item)
         .then((res) => {
           this.goods = res.data.extend.books;
+          this.total_num = this.goods.length;
         });
     },
-    show_detail(item){
-      this.set_select_goods(item)
+    show_detail(item) {
+      this.set_select_goods(item);
       this.$router.push({ path: `/detail` });
     },
-    ...mapMutations(["set_select_goods"])
+    ...mapMutations(["set_select_goods"]),
   },
   created() {
     this.get_goods();
@@ -345,7 +345,7 @@ a {
   background: #9dafb8;
   color: #fff;
 }
-.cont{
+.cont {
   text-align: center;
 }
 </style>

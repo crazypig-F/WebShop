@@ -78,10 +78,13 @@
           </div>
           <span class="con"> {{totalcount}} </span>
         </div>
-        <div class="reg_c">
+        <div v-if="!login" class="reg_c">
           <router-link to="/login" tag="a">登录</router-link>
           <span>&nbsp;|&nbsp;</span>
           <router-link to="/register" tag="a">注册</router-link>
+        </div>
+        <div v-if="login" class="reg_c">
+          <router-link to="/personal" tag="a">{{username}}</router-link>
         </div>
       </div>
     </div>
@@ -92,12 +95,14 @@
 <script>
 import axios from 'axios'
 export default {
-  data: function() {
-      return {
-          totalprice : 0,
-          totalcount : 0,
-          cartItems: []
-      }
+  data: function () {
+    return {
+      totalprice: 0,
+      totalcount: 0,
+      login: false,
+      username: "",
+      category: ["不锈钢", "原料水泥", "塑料", "木质"],
+    };
   },
   methods:{
     getCart() {
@@ -117,6 +122,10 @@ export default {
   },
   mounted() {
     this.getCart()
+  },
+  created() {
+    this.login = localStorage.getItem("login")
+    this.username = localStorage.getItem("username")
   }
 };
 </script>

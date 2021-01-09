@@ -10,7 +10,7 @@
         <div class="pro_pic">
           <div class="pro_c">
             <ul>
-              <li v-for="item in goods" :key="item.id" @click="select(item)">
+              <li v-for="item in recomend_goods" :key="item.id" @click="select(item)">
                 <img :src="item.bookPoster" alt="" />
                 <div class="cont">
                   <h3>{{ item.bookName }}</h3>
@@ -20,8 +20,8 @@
             </ul>
           </div>
           <div class="btns">
-            <a href="#" class="leftBtn">&lt;</a>
-            <a href="#" class="rightBtn">&gt;</a>
+            <a href="javascript:void(0);" class="leftBtn" @click="left">&lt;</a>
+            <a href="javascript:void(0);" class="rightBtn" @click="right">&gt;</a>
           </div>
         </div>
       </div>
@@ -49,13 +49,13 @@
         <div class="pro3_c">
           <ul class="pub_pro">
             <li>
-              <a href="#">
+              <a href="javascript:void(0);">
                 <img src="../assets/images/img40.jpg" alt="" />
               </a>
               <div class="mask"></div>
             </li>
-            <li v-for="item in goods" :key="item.id">
-              <a href="#">
+            <li v-for="item in perfect_goods" :key="item.id">
+              <a href="javascript:void(0);">
                 <img :src="item.bookPoster" alt="" />
                 <div class="cont">
                   <h3>{{ item.bookName }}</h3>
@@ -63,7 +63,9 @@
                 </div>
               </a>
               <div class="mask">
-                <a href="#" class="btn"> 查看详情 </a>
+                <a href="javascript:void(0);" class="btn" @click="select(item)">
+                  查看详情
+                </a>
               </div>
             </li>
           </ul>
@@ -75,7 +77,7 @@
               <div class="mask"></div>
             </li>
             <li v-for="item in goods" :key="item.id">
-              <a href="#">
+              <a href="javascript:void(0);">
                 <img :src="item.bookPoster" alt="" />
                 <div class="cont">
                   <h3>{{ item.bookName }}</h3>
@@ -83,7 +85,9 @@
                 </div>
               </a>
               <div class="mask">
-                <a href="#" class="btn"> 查看详情 </a>
+                <a href="javascript:void(0);" class="btn" @click="select(item)">
+                  查看详情
+                </a>
               </div>
             </li>
           </ul>
@@ -118,52 +122,52 @@
           <ul class="pro4_c">
             <li>
               <div class="pic">
-                <a href="#">
+                <a href="javascript:void(0);">
                   <img src="../assets/images/img55.png" alt="" />
                 </a>
               </div>
               <p class="cont">
-                <a href="#"> 自然生活，精选用料 </a>
+                <a href="javascript:void(0);"> 自然生活，精选用料 </a>
               </p>
             </li>
             <li>
               <div class="pic">
-                <a href="#">
+                <a href="javascript:void(0);">
                   <img src="../assets/images/img56.png" alt="" />
                 </a>
               </div>
               <p class="cont">
-                <a href="#"> 自然生活，精选用料 </a>
+                <a href="javascript:void(0);"> 自然生活，精选用料 </a>
               </p>
             </li>
             <li>
               <div class="pic">
-                <a href="#">
+                <a href="javascript:void(0);">
                   <img src="../assets/images/img57.png" alt="" />
                 </a>
               </div>
               <p class="cont">
-                <a href="#"> 自然生活，精选用料 </a>
+                <a href="javascript:void(0);"> 自然生活，精选用料 </a>
               </p>
             </li>
             <li>
               <div class="pic">
-                <a href="#">
+                <a href="javascript:void(0);">
                   <img src="../assets/images/img58.png" alt="" />
                 </a>
               </div>
               <p class="cont">
-                <a href="#"> 自然生活，精选用料 </a>
+                <a href="javascript:void(0);"> 自然生活，精选用料 </a>
               </p>
             </li>
             <li>
               <div class="pic">
-                <a href="#">
+                <a href="javascript:void(0);">
                   <img src="../assets/images/img59.png" alt="" />
                 </a>
               </div>
               <p class="cont">
-                <a href="#"> 自然生活，精选用料 </a>
+                <a href="javascript:void(0);"> 自然生活，精选用料 </a>
               </p>
             </li>
           </ul>
@@ -181,6 +185,9 @@ export default {
   data() {
     return {
       goods: [],
+      recomend_goods: [],
+      perfect_goods: [],
+      recomend_page: 0,
       activities: [
         {
           class: "pic1 pic",
@@ -206,15 +213,43 @@ export default {
       let that = this;
       axios.get("http://www.molycao.cn:8088/books").then((res) => {
         that.goods = res.data.extend.books;
+        this.get_recomend_goods()
+        this.get_perfect_goods();
       });
     },
+    get_perfect_goods() {
+      for (let index = 4; index < this.goods.length; index += 2) {
+        const element = this.goods[index];
+        this.perfect_goods.push(element);
+      }
+    },
+    get_recomend_goods() {
+      let goods = []
+      for (let index = 0; index < 4; index++) {
+        const element = this.goods[this.recomend_page * 4 + index];
+        goods.push(element);
+      }
+      this.recomend_goods = goods
+    },
+    left(){
+      if(this.recomend_page > 0){
+        this.recomend_page -= 1
+        this.get_recomend_goods()
+      }
+    },
+    right(){
+      if(this.recomend_page < this.recomend_goods.length / 4){
+        this.recomend_page += 1
+        this.get_recomend_goods()
+      }
+    },    
     ...mapMutations(["set_select_goods"]),
   },
   computed: {
     ...mapState(["select_goods"]),
   },
   created() {
-    this.get_goods()
+    this.get_goods();
   },
 };
 </script>
