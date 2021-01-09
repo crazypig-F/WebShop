@@ -189,7 +189,7 @@ export default {
           } else {
               var params = new URLSearchParams();
               params.append("userId", 1);
-              params.append("vipId", 2);
+              params.append("vipId", 1);
               var payItems = []
               var ids = []
               this.selectItems.forEach((item) => {

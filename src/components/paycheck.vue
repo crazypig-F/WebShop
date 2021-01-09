@@ -21,13 +21,25 @@
         <div class="pay-text">请选择支持方式</div>
 
         <div class="pay-way">
-            <div class="pay1 pay-img" @click=pay><img src="../assets/images/pay1.png" alt=""></div>
-            <div class="pay2 pay-img"><img src="../assets/images/pay2.png" alt=""></div>
-            <div class="pay3 pay-img"><img src="../assets/images/pay3.png" alt=""></div>
-            <div class="pay4 pay-img"><img src="../assets/images/pay4.png" alt=""></div>
-            <div class="pay5 pay-img"><img src="../assets/images/pay5.png" alt=""></div>
-            <div class="pay6 pay-img"><img src="../assets/images/pay6.png" alt=""></div>
+            <span>
+                <input type= "checkbox" :checked=zhifubao @click=zhifubaoPay class="button-pay-img"/>
+                <img class="pay-images" src="../assets/images/zhifubao.png" alt="">
+            </span>
+            <span>
+                <input type= "checkbox" :checked=weixing @click=weixingPay class="button-pay-img"/>
+                <img class="pay-images" src="../assets/images/weixing.png" alt=""/>
+            </span>
         </div>
+
+        <div class="buttoncontainer">
+            <div class="paybutton">
+                <div class="btn">
+                    <button>取消订单</button>
+                    <button @click=pay>确认支付</button>
+                </div>
+            </div>
+        </div>
+        
     </div>
     <Footer></Footer>
 </template>
@@ -46,8 +58,8 @@ export default {
             items : {},
             totalPrice : 0,
             totalDiscount : 0,
-            title : "确认支付",
-            show : true
+            zhifubao: false,
+            weixing: false
         }
     },
     methods : {
@@ -68,7 +80,39 @@ export default {
             this.totalDiscount = Math.round(this.totalDiscount)
         },
         pay() {
-
+            if (!(this.weixing || this.zhifubao)) {
+                alert("请选择至少一种支付方式")
+            } else {
+                var params = new URLSearchParams
+                params.append("orderId", this.items.order.orderId)
+                console.log(params)
+                axios.post("http://www.molycao.cn:8088/deleteuorder", params).then(res => {
+                    if (res.status == 200) {
+                        alert("订单提交成功")
+                        this.$router.go(-1)
+                    } else {
+                        alert("订单提交失败，请稍后再试")
+                    }
+                })
+            }
+        },
+        cancle() {
+            var params = new URLSearchParams
+            params.append("orderId", this.items.order.orderId)
+            console.log(params)
+            axios.post("http://www.molycao.cn:8088/deleteuorder", params).then(res => {
+                if (res.status == 200) {
+                    this.$router.go(-1)
+                }
+            })
+        },
+        zhifubaoPay() {
+            this.zhifubao = !this.zhifubao
+            this.weixing = false
+        },
+        weixingPay() {
+             this.weixing = !this.weixing
+             this.zhifubao = false
         }
     },
     mounted() {
@@ -132,12 +176,35 @@ export default {
 .pay-way{
     margin-left: 200px;
     margin-right: 200px;
+    margin-top: 50px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
+    height: 200px;
+    text-align: center;
 }
 
 .pay-img{
-    margin: 30px 50px;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.pay-images{
+    width: 100px;
+    height: 100px;
+}
+.buttoncontainer {
+    text-align: center;
+}
+.buttoncontainer .paybutton {
+    width: 300px;
+    display:inline-block;
+}
+
+.buttoncontainer .paybutton .btn {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
 }
 </style>

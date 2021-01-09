@@ -94,7 +94,7 @@
           </div>
         </div>
         <div class="line2">
-          <img class="line2-img" src="../assets/images/line2.png" />
+      
         </div>
       </div>
     </div>
@@ -108,6 +108,12 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  data: function() {
+      return {
+          userName: "",
+          order : [],
+      }
   },
 };
 </script>
@@ -153,7 +159,6 @@ a{
 .s_content {
   width: 100%;
   background: #f2f2f2;
-  padding-bottom: 60px;
 }
 
 .s_content .s_content_c {

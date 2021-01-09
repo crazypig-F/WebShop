@@ -1,4 +1,5 @@
-import Vue from 'vue'
 import { Button } from 'element-ui'
+import { createApp } from 'vue'
+import App from '../App.vue'
 
-// Vue.use(Button)
+createApp(App).use(Button)

@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'app',
 	data(){
 	    return {
  
@@ -16,5 +17,5 @@ export default {
 	        return this.$route.path + Math.random();
 	    }
 	}
-    }
+}
 </script>
