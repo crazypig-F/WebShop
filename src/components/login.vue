@@ -60,9 +60,9 @@ export default {
           if (res.status == 200) {
             if (res.data.code == 100) {
               this.$router.push({ path: `/index` });
-            }else{
-				console.log(res.data.msg)
-			}
+            } else {
+              console.log(res.data.msg);
+            }
           }
         });
     },

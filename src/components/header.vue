@@ -3,19 +3,19 @@
     <div class="header_c inner_c">
       <h1 class="logo">青竹商城</h1>
       <dl class="allType">
-        <dt><a href="#">查看所有类型</a></dt>
+        <dt><a href="javascript:void(0);">查看所有类型</a></dt>
         <dd>
           <div class="dd_inn">
             <ul class="dd_cont">
-              <li><a href="#">不锈钢</a></li>
-              <li><a href="#">原料水泥</a></li>
-              <li><a href="#">塑料</a></li>
-              <li><a href="#">木质</a></li>
-              <li><a href="#">陶瓷</a></li>
+              <li v-for="item in category" :key="item.id">
+                <a href="javascript:void(0);" @click="select(item)">{{
+                  item
+                }}</a>
+              </li>
             </ul>
             <ul class="pro">
               <li>
-                <a href="#">
+                <a href="javascript:void(0);">
                   <div class="pic">
                     <img src="../assets/images/img25.png" alt="" />
                   </div>
@@ -25,11 +25,11 @@
                   </div>
                 </a>
                 <div class="mask">
-                  <a href="#" class="btn">查看详情</a>
+                  <a href="javascript:void(0);" class="btn">查看详情</a>
                 </div>
               </li>
               <li>
-                <a href="#">
+                <a href="javascript:void(0);">
                   <div class="pic">
                     <img src="../assets/images/img26.png" alt="" />
                   </div>
@@ -39,11 +39,11 @@
                   </div>
                 </a>
                 <div class="mask">
-                  <a href="#" class="btn">查看详情</a>
+                  <a href="javascript:void(0);" class="btn">查看详情</a>
                 </div>
               </li>
               <li>
-                <a href="#">
+                <a href="javascript:void(0);">
                   <div class="pic">
                     <img src="../assets/images/img27.png" alt="" />
                   </div>
@@ -53,7 +53,7 @@
                   </div>
                 </a>
                 <div class="mask">
-                  <a href="#" class="btn">查看详情</a>
+                  <a href="javascript:void(0);" class="btn">查看详情</a>
                 </div>
               </li>
             </ul>
@@ -61,25 +61,27 @@
         </dd>
       </dl>
       <ul class="nav">
-        <li><router-link to='/index' tag="a">首页</router-link></li>
-        <li><router-link to='/all' tag="a">所有产品</router-link></li>
-        <li><router-link to='/personal' tag="a">个人中心</router-link></li>
+        <li><router-link to="/index" tag="a">首页</router-link></li>
+        <li><router-link to="/all" tag="a">所有产品</router-link></li>
+        <li><router-link to="/personal" tag="a">个人中心</router-link></li>
       </ul>
       <!-- <a href="#" class="search"></a> -->
       <div class="reg">
-          <div class="ico">
-            <span class="ico_c"></span>
-            <div class="settle">
-              <p class="con">{{totalcount}}件商品 共计：<span>￥0</span></p>
-              <router-link to='/cart' tag="a"><a href="#" class="btn">去看看</a></router-link>
-            </div>
-            <span class="con"> 0 </span>
+        <div class="ico">
+          <span class="ico_c"></span>
+          <div class="settle">
+            <p class="con">{{ totalcount }}件商品 共计：<span>￥0</span></p>
+            <router-link to="/cart" tag="a"
+              ><a href="#" class="btn">去看看</a></router-link
+            >
           </div>
-          <div class="reg_c">
-            <router-link to='/login' tag="a">登录</router-link>
-            <span>&nbsp;|&nbsp;</span>
-            <router-link to='/register' tag="a">注册</router-link>
-          </div>
+          <span class="con"> 0 </span>
+        </div>
+        <div class="reg_c">
+          <router-link to="/login" tag="a">登录</router-link>
+          <span>&nbsp;|&nbsp;</span>
+          <router-link to="/register" tag="a">注册</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -87,56 +89,73 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
-  data: function() {
-      return {
-          totalprice : 0,
-          totalcount : 0,
-          items: [
-              {
-                  id:1,
-                  pic:"http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_140x140.png?v=1484817638",
-                  title:"经典系列计算机",
-                  price:200,
-                  count:1,
-                  isChecked:false
-              },
-              {
-                  id:2,
-                  pic:"http://asset.ibanquan.com/image/5880828b9bedc407dc000014/s_140x140.png?v=1484817035",
-                  title:"黑陶自然花香蜡烛",
-                  price:123,
-                  count:3,
-                  isChecked:false
-              },
-              {
-                  id:3,
-                  pic:"http://asset.ibanquan.com/image/588082c50dd76c1c9700001b/s_140x140.png?v=1484817093",
-                  title:"便携简约清扫扫帚",
-                  price:312,
-                  count:2,
-                  isChecked:false
-              },
-              {
-                  id:4,
-                  pic:"http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
-                  title:"简约木制餐盘",
-                  price:300,
-                  count:1,
-                  isChecked:false
-              },
-              {
-                  id:4,
-                  pic:"http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
-                  title:"简约木制餐盘",
-                  price:300,
-                  count:1,
-                  isChecked:false
-              }
-          ]
-      }
+  data: function () {
+    return {
+      totalprice: 0,
+      totalcount: 0,
+      items: [
+        {
+          id: 1,
+          pic:
+            "http://asset.ibanquan.com/image/588084e63f8f90098800003a/s_140x140.png?v=1484817638",
+          title: "经典系列计算机",
+          price: 200,
+          count: 1,
+          isChecked: false,
+        },
+        {
+          id: 2,
+          pic:
+            "http://asset.ibanquan.com/image/5880828b9bedc407dc000014/s_140x140.png?v=1484817035",
+          title: "黑陶自然花香蜡烛",
+          price: 123,
+          count: 3,
+          isChecked: false,
+        },
+        {
+          id: 3,
+          pic:
+            "http://asset.ibanquan.com/image/588082c50dd76c1c9700001b/s_140x140.png?v=1484817093",
+          title: "便携简约清扫扫帚",
+          price: 312,
+          count: 2,
+          isChecked: false,
+        },
+        {
+          id: 4,
+          pic:
+            "http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
+          title: "简约木制餐盘",
+          price: 300,
+          count: 1,
+          isChecked: false,
+        },
+        {
+          id: 4,
+          pic:
+            "http://asset.ibanquan.com/image/588084ae3f8f90098c000036/s_140x140.png?v=1484817583",
+          title: "简约木制餐盘",
+          price: 300,
+          count: 1,
+          isChecked: false,
+        },
+      ],
+      category: ["不锈钢", "原料水泥", "塑料", "木质"],
+    };
+  },
+  methods: {
+    select(item) {
+      this.set_select_category(item);
+      this.$router.replace({ path: `/all`});
+    },
+    ...mapMutations(["set_select_category"]),
+  },
+  computed: {
+    ...mapState(["select_category"]),
   }
-}
+};
 </script>
 
 <style scoped>
