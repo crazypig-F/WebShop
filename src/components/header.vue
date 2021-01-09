@@ -71,12 +71,12 @@
         <div class="ico">
           <span class="ico_c"></span>
           <div class="settle">
-            <p class="con">{{ totalcount }}件商品 共计：<span>￥0</span></p>
+            <p class="con">{{ totalcount }}件商品 共计：<span>￥{{totalprice}}</span></p>
             <router-link to="/cart" tag="a"
               ><a href="#" class="btn">去看看</a></router-link
             >
           </div>
-          <span class="con"> 0 </span>
+          <span class="con"> {{totalcount}} </span>
         </div>
         <div class="reg_c">
           <router-link to="/login" tag="a">登录</router-link>
