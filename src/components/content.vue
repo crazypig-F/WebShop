@@ -10,7 +10,11 @@
         <div class="pro_pic">
           <div class="pro_c">
             <ul>
-              <li v-for="item in recomend_goods" :key="item.id" @click="select(item)">
+              <li
+                v-for="item in recomend_goods"
+                :key="item.id"
+                @click="select(item)"
+              >
                 <img :src="item.bookPoster" alt="" />
                 <div class="cont">
                   <h3>{{ item.bookName }}</h3>
@@ -21,7 +25,9 @@
           </div>
           <div class="btns">
             <a href="javascript:void(0);" class="leftBtn" @click="left">&lt;</a>
-            <a href="javascript:void(0);" class="rightBtn" @click="right">&gt;</a>
+            <a href="javascript:void(0);" class="rightBtn" @click="right"
+              >&gt;</a
+            >
           </div>
         </div>
       </div>
@@ -32,7 +38,11 @@
         </div>
         <div class="pro2_c">
           <ul class="pro2_c_pic">
-            <li :class="item.class" v-for="item in activities" :key="item.id">
+            <li
+              :class="item.class"
+              v-for="item in activities"
+              :key="item.id"
+            >
               <a href="javascript:void(0);">
                 <img :src="item.path" alt="" />
               </a>
@@ -190,14 +200,17 @@ export default {
       recomend_page: 0,
       activities: [
         {
+          name: "activity1",
           class: "pic1 pic",
           path: require("../assets/images/img31.jpg"),
         },
         {
+          name: "activity2",
           class: "pic2 pic",
           path: require("../assets/images/img32.jpg"),
         },
         {
+          name: "activity3",
           class: "pic3 pic",
           path: require("../assets/images/img33.jpg"),
         },
@@ -207,13 +220,13 @@ export default {
   methods: {
     select(item) {
       // this.set_select_goods(item);
-      this.$router.push({ path: `/detail/`+ item.bookId});
+      this.$router.push({ path: `/detail/` + item.bookId });
     },
     get_goods() {
       let that = this;
       axios.get("http://www.molycao.cn:8088/books").then((res) => {
         that.goods = res.data.extend.books;
-        this.get_recomend_goods()
+        this.get_recomend_goods();
         this.get_perfect_goods();
       });
     },
@@ -224,29 +237,25 @@ export default {
       }
     },
     get_recomend_goods() {
-      let goods = []
+      let goods = [];
       for (let index = 0; index < 4; index++) {
         const element = this.goods[this.recomend_page * 4 + index];
         goods.push(element);
       }
-      this.recomend_goods = goods
+      this.recomend_goods = goods;
     },
-    left(){
-      if(this.recomend_page > 0){
-        this.recomend_page -= 1
-        this.get_recomend_goods()
+    left() {
+      if (this.recomend_page > 0) {
+        this.recomend_page -= 1;
+        this.get_recomend_goods();
       }
     },
-    right(){
-      if(this.recomend_page < this.recomend_goods.length / 4){
-        this.recomend_page += 1
-        this.get_recomend_goods()
+    right() {
+      if (this.recomend_page < this.recomend_goods.length / 4) {
+        this.recomend_page += 1;
+        this.get_recomend_goods();
       }
-    },    
-    ...mapMutations(["set_select_goods"]),
-  },
-  computed: {
-    ...mapState(["select_goods"]),
+    },
   },
   created() {
     this.get_goods();

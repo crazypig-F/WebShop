@@ -62,7 +62,7 @@
       </dl>
       <ul class="nav">
         <li><router-link to="/index" tag="a">首页</router-link></li>
-        <li><router-link to="/all" tag="a">所有产品</router-link></li>
+        <li><router-link to="/all/a" tag="a">所有产品</router-link></li>
         <li><router-link to="/personal" tag="a">个人中心</router-link></li>
       </ul>
       <!-- <a href="#" class="search"></a> -->
@@ -126,6 +126,9 @@ export default {
         this.totalcount++
         this.totalprice += item.book.bookPrice*item.goodsnum
       })
+    },
+    select(item){
+      this.$router.push({ path: `/all/` + item});
     }
 
   },
