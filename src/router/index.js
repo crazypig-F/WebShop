@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: '/all',
-    component: AllProduct
+    component: AllProduct,
   },
   {
     path: '/personal',
@@ -51,5 +51,7 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
-
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0)
+});
 export default router

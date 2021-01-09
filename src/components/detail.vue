@@ -4,30 +4,30 @@
     <div class="inter1">
       <div class="inter11">
         <a href="a青竹总界面.html">首页</a> > <a href="">所有商品</a> >
-        <span>简约时尚水泥花瓶</span>
+        <span>{{goods.bookName}}</span>
       </div>
     </div>
     <div class="inter2">
       <div class="inter21">
-        <a href=""><img src="../assets/images/img24.png" alt="" /></a>
+        <a href=""><img :src=goods.bookPoster alt="" /></a>
         <a href="" class="small"
-          ><img src="../assets/images/img24.png" alt=""
+          ><img :src=goods.bookPoster alt=""
         /></a>
       </div>
       <div class="inter22">
-        <h1>简约时尚水泥花瓶</h1>
+        <h1>{{goods.bookName}}</h1>
         <p>精选材料，设计大师设计，做工精细，摆件中的艺术品</p>
         <div class="inter221">
           <span class="s1">￥</span>
-          <span class="s2">450</span>
+          <span class="s2">{{goods.bookPrice}}</span>
           已售出<span class="s3">0</span>件
         </div>
         <h3>选择数量</h3>
         <div class="inter222">
           <div class="inter2221">
-            <a href="" class="sub"> - </a>
-            <input type="text" value="1" class="count" />
-            <a href="" class="add">+</a>
+            <a href="javascript:void(0);" @click="sub" class="sub"> - </a>
+            <input type="text" :value=number class="count" />
+            <a href="javascript:void(0);" @click="add" class="add">+</a>
           </div>
 
           件（库存<span>2344</span>件）
@@ -41,11 +41,39 @@
 
 <script>
 import Header from "./header";
-import Footer from "./footer";
+import Footer from "./footer"; 
+import { mapState } from "vuex";
 export default {
+  data(){
+    return{
+      goods: {},
+      number: 1
+    }
+  },
+  created(){
+    this.goods = this.select_goods
+    console.log(this.goods);
+  },
+  methods: {
+    add(){
+      if(this.number < 100){
+        this.number += 1
+      }
+    },
+    sub(){
+      if(this.number > 1){
+        this.number -= 1
+      }
+    }
+  },
   components: {
     Header,
     Footer,
+  },
+  computed: {
+    ...mapState([
+      "select_goods"
+    ])
   },
 };
 </script>
