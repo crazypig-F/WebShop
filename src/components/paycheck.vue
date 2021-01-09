@@ -28,7 +28,6 @@
             <div class="pay5 pay-img"><img src="../assets/images/pay5.png" alt=""></div>
             <div class="pay6 pay-img"><img src="../assets/images/pay6.png" alt=""></div>
         </div>
-
     </div>
     <Footer></Footer>
 </template>
