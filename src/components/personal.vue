@@ -99,7 +99,7 @@
                 <span class="span_info">订单编号: {{ item.orderId }}</span>
                 <span class="span_info">订单日期: {{ item.orderDate }}</span>
                 <span class="span_info">价格: {{ item.totalPrice }}</span>
-                <a href="javascript:void(0);" class="more">点击查看详情</a>
+                <a href="javascript:void(0);" class="more" @click=query(item)>点击查看详情</a>
               </div>
             </li>
           </ul>
@@ -146,6 +146,9 @@ export default {
           this.show = true;
         });
     },
+    query(item) {
+        this.$router.push({ path: `/paycheck/` + item.orderId });
+    }
   },
   mounted() {
     this.userName = localStorage.getItem("username")
